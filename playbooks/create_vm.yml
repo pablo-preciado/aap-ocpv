@@ -39,8 +39,9 @@
           - name: default
             pod: {}
         volumes:
-          - containerDisk:
-            name: rhel9-containerdisk
+          - dataVolume:    
+              name: rhel9-containerdisk
+            name: rootdisk
           - cloudInitNoCloud:
               userData: |-
                 #cloud-config
