@@ -1,5 +1,6 @@
-- hosts: localhost  # Target all hosts in your inventory
+- hosts: localhost
   tasks:
+
   - name: Create project
     redhat.openshift.k8s:
       state: present
@@ -8,6 +9,7 @@
         kind: Project
         metadata:
           name: workloads
+
   - name: Create fedora virtual machine
     redhat.openshift_virtualization.kubevirt_vm:
       state: present
@@ -44,7 +46,7 @@
     kubernetes.core.k8s_info:
       api_version: kubevirt.io/v1
       kind: VirtualMachineInstance
-      name: fedora-httpd
+      name: rhel9-httpd
       namespace: workloads
     register: vmi
     retries: 60
