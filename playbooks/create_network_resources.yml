@@ -1,4 +1,4 @@
-- hosts: all  # Target all hosts in your inventory
+- hosts: localhost
   tasks:
   - name: Create a httpd service
     redhat.openshift.k8s:

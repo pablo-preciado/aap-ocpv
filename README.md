@@ -98,7 +98,8 @@ Fill the new credential with the following values:
  - Name: Linux SSH key
  - Organization: Default
  - Credential type: Machine
- - Username: fedora
+ - Username: redhat1
+ - Password: redhat1
  - SSH Private Key: the ssh key you created in previous step
 
  ![AAP SSH key](images/aap-ssh-key.png)
