@@ -10,7 +10,7 @@
         metadata:
           name: workloads
 
-  - name: Create fedora virtual machine
+  - name: Create RHEL9 virtual machine
     redhat.openshift_virtualization.kubevirt_vm:
       state: present
       name: rhel9-httpd
@@ -22,6 +22,14 @@
       preference:
         name: rhel.9
       spec:
+        dataVolumeTemplates:
+          - metadata:
+              name: rhel-9-containerdisk
+            spec:
+              sourceRef:
+                kind: DataSource
+                name: rhel9
+                namespace: openshift-virtualization-os-images
         domain:
           devices:
             interfaces:
@@ -32,8 +40,7 @@
             pod: {}
         volumes:
           - containerDisk:
-              image: 'docker://registry.redhat.io/rhel9/rhel-guest-image@sha256:2521bd116e64cbf481e5c5c55f669d98ebf70f435f87fabb992f7ad85b83e560' # quay.io/containerdisks/fedora:latest
-            name: containerdisk
+            name: rhel9-containerdisk
           - cloudInitNoCloud:
               userData: |-
                 #cloud-config
