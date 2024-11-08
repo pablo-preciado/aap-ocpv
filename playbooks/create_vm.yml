@@ -23,7 +23,7 @@
         name: rhel.9
       data_volume_templates:
         - metadata:
-            name: rhel-9-containerdisk
+            name: rhel9-containerdisk
           spec:
             sourceRef:
               name: rhel9
