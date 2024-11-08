@@ -139,4 +139,5 @@ Go to Automation Execution > Templates > Create Template > Create Job Template. 
  - Project: OCP Virt
  - Playbook: create_vm.yml
  - Credentials: Openshift Cluster
- 
+
+![AAP Create VM template](images/aap-create-vm-template.png)

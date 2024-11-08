@@ -11,14 +11,14 @@
   - name: Create fedora virtual machine
     redhat.openshift_virtualization.kubevirt_vm:
       state: present
-      name: fedora-httpd
+      name: rhel9-httpd
       namespace: workloads
       labels:
         app: httpd
       instancetype:
         name: u1.medium
       preference:
-        name: fedora
+        name: rhel.9
       spec:
         domain:
           devices:
@@ -30,7 +30,7 @@
             pod: {}
         volumes:
           - containerDisk:
-              image: quay.io/containerdisks/fedora:latest
+              image: 'docker://registry.redhat.io/rhel9/rhel-guest-image@sha256:2521bd116e64cbf481e5c5c55f669d98ebf70f435f87fabb992f7ad85b83e560' # quay.io/containerdisks/fedora:latest
             name: containerdisk
           - cloudInitNoCloud:
               userData: |-
