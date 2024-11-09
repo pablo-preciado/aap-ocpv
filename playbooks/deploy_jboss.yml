@@ -1,6 +1,6 @@
 - name: Deploy jboss to VM's in the workloads namespace
   hosts: namespace_workloads
-  # become: true
+  become: true
   roles:
     - role: redhat.eap.eap_install
       vars:
