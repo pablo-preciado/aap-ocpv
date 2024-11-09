@@ -113,7 +113,7 @@ Fill the new credential with the following values:
   - OpenShift or Kubernetes API endpoint: paste the OpenShift cluster API endpoint, you can get it by running ```oc cluster-info```
   - API Authentication bearer token: paste the OpenShift cluster API token, you can get it by running ```oc whoami --show-token```
 
-![AAP OCP credential](images/aap-ocp-credential.png)
+![AAP OCP credential](images/aap-ocp-credentials.png)
 
 Create the Ansible inventory for your OpenShift Virtualization virtual machines, go to Automation Execution > Infrastructure > Inventories > Create inventory.
 
