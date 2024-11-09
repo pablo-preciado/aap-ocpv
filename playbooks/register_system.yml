@@ -13,6 +13,4 @@
       ansible.builtin.yum_repository:
         name: jb-eap-8-for-rhel-9-x86_64-rpms
         description: JBoss EAP 8 for RHEL 9
-        baseurl: https://cdn.redhat.com/content/dist/rhel9/x86_64/jboss-eap/8/os
         enabled: true
-        gpgcheck: true
