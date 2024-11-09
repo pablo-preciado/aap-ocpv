@@ -9,10 +9,14 @@
         password: "{{ rhsm_password }}"
         auto_attach: true
 
-     - name: Enable jboss repo in RHSM
-      community.general.rhsm_repository:
-        name: jb-eap-8.0-for-rhel-9-x86_64-rpms
-        state: enabled
+    - name: Enable jboss repo
+      command: 'subscription-manager repo --enable=jb-eap-8.0-for-rhel-9-x86_64-rpms'
+
+    # - name: Enable jboss repo in RHSM
+    #  community.general.rhsm_repository:
+    #    name: jb-eap-8.0-for-rhel-9-x86_64-rpms
+    #    state: enabled
+
     #- name: Enable JBoss EAP 8 repository
     #  ansible.builtin.yum_repository:
     #    name: jb-eap-8.0-for-rhel-9-x86_64-rpms
