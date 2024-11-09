@@ -25,8 +25,7 @@
     #    enabled: true
     #    gpgcheck: true
 
-    #- name: Enable JBoss EAP 8 repository
-    #  ansible.builtin.yum_repository:
-    #    name: jb-eap-8.0-for-rhel-9-x86_64-rpms
-    #    description: JBoss EAP 8 for RHEL 9
-    #    enabled: true
+    - name: Enable JBoss EAP 8 repository
+      ansible.builtin.yum_repository:
+        name: jb-eap-8.0-for-rhel-9-x86_64-rpms
+        enabled: true
