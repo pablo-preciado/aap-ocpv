@@ -1,0 +1,18 @@
+- name: Register and add jboss repos for all servers in namespace workloads
+  hosts: namespace_workloads
+  become: true
+  tasks:
+    - name: Register to Red Hat
+      redhat_subscription:
+        state: present
+        username: "{{ lookup('env', 'RHSM_USERNAME') }}"
+        password: "{{ lookup('env', 'RHSM_PASSWORD') }}"
+        auto_attach: true
+
+    - name: Enable JBoss EAP 8 repository
+      ansible.builtin.yum_repository:
+        name: jb-eap-8-for-rhel-9-x86_64-rpms
+        description: JBoss EAP 8 for RHEL 9
+        baseurl: https://cdn.redhat.com/content/dist/rhel9/x86_64/jboss-eap/8/os
+        enabled: true
+        gpgcheck: true
