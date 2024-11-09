@@ -5,8 +5,8 @@
     - name: Register to Red Hat
       redhat_subscription:
         state: present
-        username: "{{ lookup('env', 'RHSM_USERNAME') }}"
-        password: "{{ lookup('env', 'RHSM_PASSWORD') }}"
+        username: "{{ rhsm_username }}"
+        password: "{{ rhsm_password }}"
         auto_attach: true
 
     - name: Enable JBoss EAP 8 repository
