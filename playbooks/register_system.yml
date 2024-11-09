@@ -10,7 +10,7 @@
         auto_attach: true
 
     - name: Enable jboss repo
-      command: 'subscription-manager repo --enable=jb-eap-8.0-for-rhel-9-x86_64-rpms'
+      command: 'subscription-manager repos --enable=jb-eap-8.0-for-rhel-9-x86_64-rpms'
 
     # - name: Enable jboss repo in RHSM
     #  community.general.rhsm_repository:
