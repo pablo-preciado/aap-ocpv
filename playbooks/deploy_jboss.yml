@@ -1,15 +1,23 @@
 - name: Deploy jboss to VM's in the workloads namespace
   hosts: namespace_workloads
-  #become: true
+  become: true
   #become_method: su
   #become_user: root
   roles:
     - role: redhat.eap.eap_install
       vars:
-        #eap_version: 8.0.0
-        eap_install_workdir: /opt/jboss_eap8/
+        eap_version: 8.0.0
+        #eap_install_workdir: /opt/jboss_eap8/
         eap_home: "{{ eap_install_workdir }}/jboss-eap8"
         #eap_version: "8.0.0"             # Specify your JBoss EAP version
         #eap_root: "~/jboss-eap"     # Installation directory
         #eap_admin_user: "redhat1"        # Admin username
         #eap_admin_password: "redhat1" # Admin password
+
+#please create a Service Account, and use the credentials of the Service Account in the playbook
+#To create a Service Account go to https://console.redhat.com/application-services/service-accounts:   
+#
+#~~~
+#rhn_username: '<client_id>'   
+#rhn_password: '<client_secret>'
+#~~~
