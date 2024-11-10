@@ -5,8 +5,8 @@
   #become_user: root
   roles:
     - role: redhat.eap.eap_install
-      #vars:
+      vars:
       #  eap_version: "8.0.0"             # Specify your JBoss EAP version
-      #  eap_root: "/opt/jboss-eap"     # Installation directory
+        eap_root: "~/jboss-eap"     # Installation directory
       #  eap_admin_user: "redhat1"        # Admin username
       #  eap_admin_password: "redhat1" # Admin password
