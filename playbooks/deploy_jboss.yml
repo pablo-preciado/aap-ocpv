@@ -8,7 +8,7 @@
       vars:
         eap_version: 8.0.0
         #eap_install_workdir: /opt/jboss_eap8/
-        eap_home: "{{ eap_install_workdir }}/jboss-eap8"
+        #eap_home: "{{ eap_install_workdir }}/jboss-eap8"
         #eap_version: "8.0.0"             # Specify your JBoss EAP version
         #eap_root: "~/jboss-eap"     # Installation directory
         #eap_admin_user: "redhat1"        # Admin username
