@@ -13,6 +13,7 @@
         #eap_root: "~/jboss-eap"     # Installation directory
         #eap_admin_user: "redhat1"        # Admin username
         #eap_admin_password: "redhat1" # Admin password
+    - role: redhat.eap.eap_systemd
 
 #please create a Service Account, and use the credentials of the Service Account in the playbook
 #To create a Service Account go to https://console.redhat.com/application-services/service-accounts:   
