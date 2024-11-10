@@ -15,6 +15,7 @@
         #eap_admin_password: "redhat1" # Admin password
     - role: redhat.eap.eap_systemd
       vars:
+        eap_version: 8.0.0
         eap_install_workdir: /opt/jboss_eap8/
 
 #please create a Service Account, and use the credentials of the Service Account in the playbook
