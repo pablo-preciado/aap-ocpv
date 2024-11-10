@@ -45,3 +45,5 @@
 ##rhn_username: '<client_id>'   
 ##rhn_password: '<client_secret>'
 ##~~~
+##
+## Jboss quickstarts: https://github.com/jboss-developer/jboss-eap-quickstarts?tab=readme-ov-file
