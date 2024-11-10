@@ -1,27 +1,47 @@
 - name: Deploy jboss to VM's in the workloads namespace
   hosts: namespace_workloads
-  #become: true
-  #become_method: su
-  #become_user: root
+  vars:
+    eap_version: '8.0.0'
+    eap_install_workdir: '/opt/'
+    install_name: jboss-eap
+    eap_user: "{{ install_name }}"
+    eap_config_base: standalone-ha.xml
+    eap_home: "{{ eap_install_workdir }}/{{ install_name }}-{{ (eap_version.split('.'))[0:2] | join('.') }}"
+    eap_basedir_prefix: "/opt/{{ inventory_hostname }}"
+    eap_config_name: "{{ install_name }}"
+    eap_instance_name: "{{ install_name }}"
+    service_systemd_env_file: "/etc/eap.conf"
+    service_systemd_conf_file: "/usr/lib/systemd/system/jboss-eap.service"
+    instance_http_ports:
+      - 8080
   roles:
     - role: redhat.eap.eap_install
-      vars:
-        eap_version: 8.0.0
-        eap_install_workdir: /opt/jboss_eap8/
-        #eap_home: "{{ eap_install_workdir }}/jboss-eap8"
-        #eap_version: "8.0.0"             # Specify your JBoss EAP version
-        #eap_root: "~/jboss-eap"     # Installation directory
-        #eap_admin_user: "redhat1"        # Admin username
-        #eap_admin_password: "redhat1" # Admin password
     - role: redhat.eap.eap_systemd
-      vars:
-        eap_version: 8.0.0
-        eap_install_workdir: /opt/jboss_eap8/
 
-#please create a Service Account, and use the credentials of the Service Account in the playbook
-#To create a Service Account go to https://console.redhat.com/application-services/service-accounts:   
+#- name: Deploy jboss to VM's in the workloads namespace
+#  hosts: namespace_workloads
+#  #become: true
+#  #become_method: su
+#  #become_user: root
+#  roles:
+#    - role: redhat.eap.eap_install
+#      vars:
+#        eap_version: 8.0.0
+#        eap_install_workdir: /opt/jboss_eap8/
+#        #eap_home: "{{ eap_install_workdir }}/jboss-eap8"
+#        #eap_version: "8.0.0"             # Specify your JBoss EAP version
+#        #eap_root: "~/jboss-eap"     # Installation directory
+#        #eap_admin_user: "redhat1"        # Admin username
+#        #eap_admin_password: "redhat1" # Admin password
+#    - role: redhat.eap.eap_systemd
+#      vars:
+#        eap_version: 8.0.0
+#        eap_install_workdir: /opt/jboss_eap8/
 #
-#~~~
-#rhn_username: '<client_id>'   
-#rhn_password: '<client_secret>'
-#~~~
+##please create a Service Account, and use the credentials of the Service Account in the playbook
+##To create a Service Account go to https://console.redhat.com/application-services/service-accounts:   
+##
+##~~~
+##rhn_username: '<client_id>'   
+##rhn_password: '<client_secret>'
+##~~~
