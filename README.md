@@ -1,9 +1,6 @@
-
-For the moment this is just a copy of the base repo we're using, that is https://github.com/ahmbas/ansible-ocp-virt/tree/main
-There's an article explaining how to use that repo here: https://www.redhat.com/en/blog/ansible-automation-platform-openshift-virtualization-multi-cluster-environment
-We'll be using that as a basis, the modify and adapt to our use case.
-
 # Ansible and Openshift Virtualization demo
+
+I'd like to use this space to mention that [this Red Hat article](https://www.redhat.com/en/blog/ansible-automation-platform-openshift-virtualization-multi-cluster-environment) was a source of inspiration for this repo. You can find detailed information about what's done in the article by looking at the [author's git repo](https://www.redhat.com/en/blog/ansible-automation-platform-openshift-virtualization-multi-cluster-environment)
 
 ## Resources needed to run this demo
 
