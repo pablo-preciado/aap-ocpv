@@ -37,16 +37,12 @@
       ansible.builtin.include_role:
         name: redhat.eap.eap_systemd
 
-  #roles:
-  #  - role: redhat.eap.eap_install
-  #  - role: redhat.eap.eap_systemd
-
-##please create a Service Account, and use the credentials of the Service Account in the playbook
-##To create a Service Account go to https://console.redhat.com/application-services/service-accounts:   
-##
-##~~~
-##rhn_username: '<client_id>'   
-##rhn_password: '<client_secret>'
-##~~~
-##
-## Jboss quickstarts: https://github.com/jboss-developer/jboss-eap-quickstarts?tab=readme-ov-file
+#please create a Service Account, and use the credentials of the Service Account in the playbook
+#To create a Service Account go to https://console.redhat.com/application-services/service-accounts:   
+#
+#~~~
+#rhn_username: '<client_id>'   
+#rhn_password: '<client_secret>'
+#~~~
+#
+# Jboss quickstarts: https://github.com/jboss-developer/jboss-eap-quickstarts?tab=readme-ov-file
