@@ -13,10 +13,10 @@
   - name: Create RHEL9 virtual machine
     redhat.openshift_virtualization.kubevirt_vm:
       state: present
-      name: rhel9-httpd
+      name: rhel9-jboss8
       namespace: workloads
       labels:
-        app: httpd
+        app: jboss8
       instancetype:
         name: u1.medium
       preference:
@@ -61,9 +61,45 @@
     kubernetes.core.k8s_info:
       api_version: kubevirt.io/v1
       kind: VirtualMachineInstance
-      name: rhel9-httpd
+      name: rhel9-jboss8
       namespace: workloads
     register: vmi
     retries: 60
     delay: 10
     until: (vmi.resources[0].status.interfaces[0]['ipAddress'] | default('')) | length > 0
+
+  - name: Create a service for exposing the VM
+    redhat.openshift.k8s:
+      state: present
+      definition:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: rhel9-jboss8-svc
+          namespace: workloads
+        spec:
+          selector:
+            app: jboss8
+          ports:
+            - name: rhel9-jboss8-port
+              protocol: TCP
+              port: 8080
+              targetPort: 8080
+  
+  - name: Create a route for exposing application in our VM
+    redhat.openshift.k8s:
+      state: present
+      definition:
+        kind: Route
+        apiVersion: route.openshift.io/v1
+        metadata:
+          name: rhel9-jboss8-route
+          namespace: workloads
+        spec:
+          to:
+            kind: Service
+            name: rhel9-jboss8-svc
+            weight: 100
+          port:
+            targetPort: 8080
+          wildcardPolicy: None
