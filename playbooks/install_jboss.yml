@@ -21,8 +21,8 @@
       become: true
       redhat_subscription:
         state: present
-        username: "{{ rhsm_username }}" #"{{ lookup('env', 'RHN_USERNAME') }}" #We are injecting environment variables via credentials
-        password: "{{ rhsm_password }}" #"{{ lookup('env', 'RHN_PASSWORD') }}"
+        username: "{{ rhsm_username }}" 
+        password: "{{ rhsm_password }}"
         auto_attach: true
 
     - name: Enable jboss repo
