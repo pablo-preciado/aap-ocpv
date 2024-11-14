@@ -55,6 +55,7 @@
                   expire: false
                 password: redhat1
                 user: redhat1
+                ssh_pwauth: true
             name: cloudinit
   
   - name: Wait for virtual machine IP to be populated
