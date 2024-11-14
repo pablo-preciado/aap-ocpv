@@ -4,6 +4,8 @@
   
   tasks:
 
+# We're deploying helloworld from Jboss quickstarts: https://github.com/jboss-developer/jboss-eap-quickstarts?tab=readme-ov-file
+
     - name: Install packages needed to deploy application
       ansible.builtin.dnf:
         state: latest

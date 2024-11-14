@@ -129,6 +129,68 @@ Now go to the inventory you just created click on the "Sources" tab and click on
 
 Once created, on the top right, click on "Launch inventory update".
 
+We're going to create a couple of new Credential Types for connecting with Red Hat's CDN. go to Automation Execution > Infrastructure > Credential types > Create credential type. Give it the folowing values:
+ - Name: Red Hat CDN User/Pass
+ - Input configuration:
+ ```
+ fields:
+  - id: rhn_username
+    type: string
+    label: "RHN Username"
+  - id: rhn_password
+    type: string
+    label: "RHN Password"
+    secret:true
+```
+ - Injector configuration:
+ ```
+ env:
+  RHN_USERNAME: "{{ rhn_username }}"
+  RHN_PASSWORD: "{{ rhn_password }}"
+ ```
+![AAP Credential Type RHN User/Pass](images/aap-credtype-rhnuser.png)
+
+Create another credential type for the Red Hat portal Service Account. Go to Automation Execution > Infrastructure > Credential types > Create credential type. Fill with the folowing values:
+ - Name: Red Hat CDN Service Account
+ - Input configuration:
+ ```
+ fields:
+  - id: rhn_client_id
+    type: string
+    secret:true
+    label: "RHN Client ID"
+  - id: rhn_client_secret
+    type: string
+    label: "RHN Client Secret"
+    secret:true
+```
+ - Injector configuration:
+ ```
+env:
+  RHN_CLIENT_ID: '{{ rhn_client_id }}'
+  RHN_CLIENT_SECRET: '{{ rhn_client_secret }}'
+ ```
+![AAP Credential Type RHN Service Account](images/aap-credtype-rhnsa.png)
+
+Now create Credentials for the newly created credential types. First go to Automation Execution > Infrastructure > Credentials > Create Credential. Use the following data:
+ - Name: My RHN username/password
+ - Credential type: Red Hat CDN User/Pass
+ - RHN Username: your Red Hat Account username
+ - RHN Password: your Red Hat Account password
+
+ ![AAP Credential RHN User/Pass](images/aap-credential-rhnuser.png)
+
+Before proceeding to next step you need to obtain a Service Account Client ID and Client Secret from Red Hat portal. This is used by the jboss installer to download the necesary packages.
+To obtain the data of your Service Account use a browser to navigate to [Red Hat Cloud Console](https://console.redhat.com/application-services/service-accounts). Click on Create service account and save your Client ID and Client Secret.
+
+Then go to Automation Execution > Infrastructure > Credentials > Create Credential. Use the following data:
+ - Name: My RHN Service Account
+ - Credential type: Red Hat CDN Service Account
+ - RHN Client: the Service Account Client ID you just retrieved from Red Hat Cloud Console
+ - RHN RHN Client Secret: the Service Account Client Secret you just retrieved from Red Hat Cloud Console
+
+ ![AAP Credential RHN Service Account](images/aap-credential-rhnsa.png)
+
 ## Configure Automation Job Templates for creating virtual machine and day 2 operations
 
 Go to Automation Execution > Templates > Create Template > Create Job Template. Fill with the following information:
