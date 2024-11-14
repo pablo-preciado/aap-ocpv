@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-application-set
+spec:
+  generators:
+    - list:
+        elements:
+          - name: demo-operator-groups
+            path: gitops/operator-groups
+            syncWave: "1"
+          - name: demo-operator-subscriptions
+            path: gitops/subscriptions
+            syncWave: "2"
+          - name: demo-crd-instances
+            path: gitops/crd-instances
+            syncWave: "3"
+  template:
+    metadata:
+      name: "{{name}}"
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/pablo-preciado/aap-ocpv'
+        targetRevision: main
+        path: "{{path}}"
+      destination:
+        server: 'https://kubernetes.default.svc'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+      # Sync wave is controlled through annotations within each app in the generator list
+      metadata:
+        annotations:
+          argocd.argoproj.io/sync-wave: "{{syncWave}}"
