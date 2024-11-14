@@ -55,8 +55,6 @@
                   expire: false
                 password: redhat1
                 user: redhat1
-                ssh_authorized_keys:
-                  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC4ukkAeRFwv3MwFMQN5CQsIpRl+iPOnSrmR9hvirODi9hl3CUdSVGJKMF8isIyPUishNQSG/lD6NHKyGOV8Sda0OzSUmkV13AfM+jd1NCD0/9swvw7YeQnNlqKHJVtztLIOjRmk9MFtgSnGQnx1JVd0VU98YQSBfnRaADyIZ5ePac9FECb/ocCmKtC+edmtkAGJze+K6nDZfiE7pozXvz92K4CeSjDFiX3julb3hITZPp72EexhrhzQBzNNLcvZ3czMopwS0EiwQ8fCZOr70UYvITwH6xEc/nDiFMsB03IuyJ8XwSUKR3Om/aU0sby8vwLo6zQtgJQAMhD+WL3rdsCsYDvi+aaVfbp3okx5MeLCs2c00H/2dZatYRx9odbxyCccl3YICKApbAZYNWVmvMWfRddMoxTJF3g4KZblgptoOABsHs2tXCRGxLksbU2XAqaYt4oT4lCRl9qVZXRa0jqsnOqd8+0knf1JncVi9BGFq1oCDzgfbG3EOnBdjR5MH8= preciado@toolbx
             name: cloudinit
   
   - name: Wait for virtual machine IP to be populated
