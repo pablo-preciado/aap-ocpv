@@ -15,8 +15,8 @@
     instance_http_ports:
       - 8080
     # Jboss EAP roles use the followin variables to connect with Red Hat Network and download packages, they shall be filled with your Red Hat Portal Service Account
-    rhn_username: "{{ lookup('env', 'RHN_CLIENT_ID') }}"
-    rhn_password: "{{ lookup('env', 'RHN_CLIENT_SECRET') }}"
+    #rhn_username: "{{ lookup('env', 'RHN_CLIENT_ID') }}"
+    #rhn_password: "{{ lookup('env', 'RHN_CLIENT_SECRET') }}"
   
   tasks:
 
