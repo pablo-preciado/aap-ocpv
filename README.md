@@ -85,19 +85,14 @@ Create a project with the following values:
 
  ![AAP project](images/aap-project.png)
 
-Create ssh keys:
-
-    ssh-keygen
-
 Lets create the credential for log into the ssh keys in our machines, in your Automation Controller, go to Automation Execution > Infrastructure > Credentials > Create Credential.
 
 Fill the new credential with the following values:
- - Name: Linux SSH key
+ - Name: Linux ssh user/pass
  - Organization: Default
  - Credential type: Machine
  - Username: redhat1
  - Password: redhat1
- - SSH Private Key: the ssh key you created in previous step
 
  ![AAP SSH key](images/aap-ssh-key.png)
 
@@ -191,13 +186,46 @@ Then go to Automation Execution > Infrastructure > Credentials > Create Credenti
 
  ![AAP Credential RHN Service Account](images/aap-credential-rhnsa.png)
 
-## Configure Automation Job Templates for creating virtual machine and day 2 operations
+## Configure Automation Job Templates for creating virtual machine, jboss installation and application deployment
 
-Go to Automation Execution > Templates > Create Template > Create Job Template. Fill with the following information:
- - Name: Create VM
+First our Job Template for creating the necesary virtual machine in OpenShift Virtualization with its Service and Route. Go to Automation Execution > Templates > Create Template > Create Job Template. Fill with the following information:
+ - Name: [JT] Create VM
  - Inventory: OCP Virt
  - Project: OCP Virt
- - Playbook: create_vm.yml
+ - Playbook: playbooks/create_vm.yml
  - Credentials: Openshift Cluster
 
 ![AAP Create VM template](images/aap-create-vm-template.png)
+
+Create next Job Template, this one will register our virtual machine operating system to Red Hat, add jboss 8 repos, install and start jboss server. Go to Automation Execution > Templates > Create Template > Create Job Template. Fill with the following information:
+ - Name: [JT] Install and deploy Jboss EAP 8
+ - Inventory: OCP Virt
+ - Project: OCP Virt
+ - Playbook: playbooks/install_jboss.yml
+ - Credentials: Linux ssh user/pass, My RHN Service Account, My RHN Username/Password
+
+ ¡¡¡¡ FOTO
+
+Lastly, create the Job Template in charge of deploying a hello world aplication from the ![Jboss Quickstarts repo](https://github.com/jboss-developer/jboss-eap-quickstarts?tab=readme-ov-file). Go to Automation Execution > Templates > Create Template > Create Job Template. Fill with the following information:
+ - Name: [JT] Deploy hello world application
+ - Inventory: OCP Virt
+ - Project: OCP Virt
+ - Playbook: playbooks/deploy_app.yml
+ - Credentials: Linux ssh user/pass
+
+¡¡¡¡ FOTO
+
+## Configure a Workflow Template in Automation Controller
+
+Workflow Templates are used for creating pipelines of Automation Jobs. In this case we're going to create a Workflow Template that runs the three Automation Jobs we created in previous step. Hence this Workflow Template will create our virtual machine, install jboss, start jboss and deploy our application. Everything in a single Job.
+
+There's also one special job that we'll be adding to our Workflow Template. This is an inventory sync. This is needed after creating the virtual machine, thanks to it, Ansible Automation Controller will automatically add the newly created virtual machine to our inventory and next jobs can point to it to install Jboss and deploy our sample application.
+
+Go to Automation Execution > Templates > Create Template > Create Workflow Template. Fill with the following information:
+ - Name: [WF] Create VM and install jboss
+
+¡¡¡¡ FOTO
+
+Then, on the top right click on "View workflow visualizer". Add all the needed jobs until you have something similar to this:
+
+¡¡¡¡ FOTO
