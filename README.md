@@ -166,9 +166,9 @@ Create another credential type for the Red Hat portal Service Account. Go to Aut
 ```
  - Injector configuration:
  ```
-env:
-  RHN_CLIENT_ID: '{{ rhn_client_id }}'
-  RHN_CLIENT_SECRET: '{{ rhn_client_secret }}'
+extra_vars:
+  rhn_password: '{{ rhn_client_secret }}'
+  rhn_username: '{{ rhn_client_id }}'
  ```
 ![AAP Credential Type RHN Service Account](images/aap-credtype-rhnsa.png)
 
