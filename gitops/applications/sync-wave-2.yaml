@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: demo-operator-subscriptions
+  name: demo-crds
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:

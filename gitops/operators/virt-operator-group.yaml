@@ -1,9 +1,0 @@
-apiVersion: operators.coreos.com/v1
-kind: OperatorGroup
-metadata:
-  name: my-openshift-cnv-operatorgroup
-  namespace: openshift-cnv
-spec:
-  targetNamespaces:
-    - openshift-cnv
-  upgradeStrategy: Default
