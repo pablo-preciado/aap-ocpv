@@ -17,6 +17,7 @@ spec:
       name: "{{name}}"
       annotations:
         argocd.argoproj.io/sync-wave: "{{syncWave}}"
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     spec:
       project: default
       source:
