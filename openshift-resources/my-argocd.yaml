@@ -1,0 +1,10 @@
+apiversion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: my-argocd
+  namespace: openshift-gitops-operator
+spec:
+  server:
+    route:
+      enabled: true
+  applicationSet: {}
