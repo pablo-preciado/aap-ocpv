@@ -5,8 +5,8 @@ metadata:
     app.kubernetes.io/managed-by: aap-operator
     app.kubernetes.io/name: my-aap-instance
     app.kubernetes.io/part-of: my-aap-instance
-  name: my-aap-instance
-  namespace: my-aap
+  name: my-aap
+  namespace: aap
 spec:
   api:
     log_level: INFO
