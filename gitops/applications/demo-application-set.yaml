@@ -6,15 +6,12 @@ spec:
   generators:
     - list:
         elements:
-          - name: demo-operator-groups
-            path: gitops/operator-groups
+          - name: operators
+            path: gitops/operators
             syncWave: "1"
-          - name: demo-operator-subscriptions
-            path: gitops/subscriptions
-            syncWave: "2"
-          - name: demo-crd-instances
+          - name: crd-instances
             path: gitops/crd-instances
-            syncWave: "3"
+            syncWave: "2"
   template:
     metadata:
       name: "{{name}}"
