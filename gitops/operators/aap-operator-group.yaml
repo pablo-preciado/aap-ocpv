@@ -5,3 +5,5 @@ metadata:
   namespace: aap
 spec:
   upgradeStrategy: Default
+  targetNamespaces:
+    - aap
