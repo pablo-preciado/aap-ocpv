@@ -103,17 +103,20 @@
       register: linux_user_pass_cred
 
 #############################################
-    - name: Debugging information
-      debug:
-        msg: "Stopping for debugging purposes. Review the environment and resume manually if needed."
-    
-    - name: Fail to stop playbook
-      fail:
-        msg: "Playbook intentionally stopped for debugging."
+    #- name: Debugging information
+    #  debug:
+    #    msg: "Stopping for debugging purposes. Review the environment and resume manually if needed."
+    #
+    #- name: Fail to stop playbook
+    #  fail:
+    #    msg: "Playbook intentionally stopped for debugging."
 #############################################
 
     - name: Create OpenShift Cluster credential
       ansible.controller.credential:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
         name: "OpenShift Cluster"
         organization: "Default"
         credential_type: "OpenShift or Kubernetes API Bearer Token"
@@ -124,6 +127,9 @@
 
     - name: Create My RHN username/password credential
       ansible.controller.credential:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"      
         name: "My RHN username/password"
         organization: "Default"
         credential_type: Red Hat CDN User/Pass
@@ -134,6 +140,9 @@
 
     - name: Create My RHN Service Account credential
       ansible.controller.credential:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
         name: "My RHN Service Account"
         organization: "Default"
         credential_type: "Red Hat CDN Service Account"
@@ -142,23 +151,32 @@
           rhn_client_secret: "{{ rhn_client_secret }}"
       register: my_rhn_service_account_cred
 
-    - name: Create OCP Virt project
-      ansible.controller.project:
-        name: "OCP Virt"
-        description: "OCP Virt project"
-        organization: "Default"
-        scm_type: "git"
-        scm_url: "https://github.com/pablo-preciado/aap-ocpv.git"
-      register: ocp_virt_project
+    #- name: Create OCP Virt project
+    #  ansible.controller.project:
+    #    controller_host: "{{ my_controller_fqdn }}"
+    #    controller_username: "{{ my_controller_user }}"
+    #    controller_password: "{{ my_controller_pass }}"
+    #    name: "OCP Virt"
+    #    description: "OCP Virt project"
+    #    organization: "Default"
+    #    scm_type: "git"
+    #    scm_url: "https://github.com/pablo-preciado/aap-ocpv.git"
+    #  register: ocp_virt_project
 
     - name: Create OCP Virt inventory
       ansible.controller.inventory:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"      
         name: "OCP Virt"
         organization: "Default"
       register: ocp_virt_inventory
 
     - name: Create OCP Virt inventory source
       ansible.controller.inventory_source:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
         name: "OCP Virt"
         inventory: "{{ ocp_virt_inventory.id }}"
         source: "OpenShift Virtualization"
