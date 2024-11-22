@@ -1,0 +1,11 @@
+apiVersion: tower.ansible.com/v1alpha1
+kind: AnsibleProject
+metadata:
+  name: ocp-virt-project
+  namespace: aap
+spec:
+  name: OCP Virt
+  connection_secret: controller-access
+  organization: Default
+  scm_type: git
+  repo: 'https://github.com/pablo-preciado/aap-ocpv.git'

@@ -88,7 +88,7 @@ Create a project with the following values:
 Lets create the credential for log into the ssh keys in our machines, in your Automation Controller, go to Automation Execution > Infrastructure > Credentials > Create Credential.
 
 Fill the new credential with the following values:
- - Name: Linux ssh user/pass
+ - Name: Linux user/pass
  - Organization: Default
  - Credential type: Machine
  - Username: redhat1
@@ -135,13 +135,13 @@ We're going to create a couple of new Credential Types for connecting with Red H
   - id: rhn_password
     type: string
     label: "RHN Password"
-    secret:true
+    secret: true
 ```
  - Injector configuration:
  ```
- env:
-  RHN_USERNAME: "{{ rhn_username }}"
-  RHN_PASSWORD: "{{ rhn_password }}"
+ extra_vars:
+  rhsm_username: "{{ rhn_username }}"
+  rhsm_password: "{{ rhn_password }}"
  ```
 ![AAP Credential Type RHN User/Pass](images/aap-credtype-rhnuser.png)
 
@@ -152,12 +152,12 @@ Create another credential type for the Red Hat portal Service Account. Go to Aut
  fields:
   - id: rhn_client_id
     type: string
-    secret:true
+    secret: true
     label: "RHN Client ID"
   - id: rhn_client_secret
     type: string
     label: "RHN Client Secret"
-    secret:true
+    secret: true
 ```
  - Injector configuration:
  ```

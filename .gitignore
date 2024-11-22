@@ -1,3 +1,5 @@
 ssh-keys
 my-service-account
 ToDoList
+*.log
+*.json
