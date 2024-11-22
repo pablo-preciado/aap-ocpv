@@ -73,19 +73,34 @@
             rhsm_password: "{{ rhn_password }}"
       register: rhn_user_pass_cred_type
 
-    - name: Create Red Hat Automation Hub credential
+    #- name: Create Red Hat Automation Hub credential
+    #  ansible.controller.credential:
+    #    controller_host: "{{ my_controller_fqdn }}"
+    #    controller_username: "{{ my_controller_user }}"
+    #    controller_password: "{{ my_controller_pass }}"
+    #    name: "Red Hat Automation Hub"
+    #    organization: "Default"
+    #    state: present
+    #    credential_type: "Ansible Galaxy/Automation Hub API Token"
+    #    inputs:
+    #      galaxy_server_url: "{{ galaxy_server_url }}"
+    #      auth_server_url: "{{ galaxy_auth_server_url }}"
+    #      api_token: "{{ galaxy_api_token }}"
+    #  register: rhn_automation_hub_cred
+
+    - name: Create Linux user/pass credential
       ansible.controller.credential:
         controller_host: "{{ my_controller_fqdn }}"
         controller_username: "{{ my_controller_user }}"
         controller_password: "{{ my_controller_pass }}"
-        name: "Red Hat Automation Hub"
+        name: "Linux user/pass"
         organization: "Default"
-        credential_type: "Ansible Galaxy/Automation Hub API Token"
+        state: present
+        credential_type: "Machine"
         inputs:
-          galaxy_server_url: "{{ galaxy_server_url }}"
-          auth_server_url: "{{ galaxy_auth_server_url }}"
-          api_token: "{{ galaxy_api_token }}"
-      register: rhn_automation_hub_cred
+          username: "redhat1"
+          password: "redhat1"
+      register: linux_user_pass_cred
 
 #############################################
     - name: Debugging information
@@ -96,19 +111,6 @@
       fail:
         msg: "Playbook intentionally stopped for debugging."
 #############################################
-
-    - name: Create Linux user/pass credential
-      ansible.controller.credential:
-        controller_host: "{{ my_controller_fqdn }}"
-        controller_username: "{{ my_controller_user }}"
-        controller_password: "{{ my_controller_pass }}"
-        name: "Linux user/pass"
-        organization: "Default"
-        credential_type: "Machine"
-        inputs:
-          username: "redhat1"
-          password: "redhat1"
-      register: linux_user_pass_cred
 
     - name: Create OpenShift Cluster credential
       ansible.controller.credential:
