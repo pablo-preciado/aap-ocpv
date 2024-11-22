@@ -26,6 +26,9 @@
 
     - name: Create Red Hat CDN Service Account credential type
       ansible.controller.credential_type:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
         name: "Red Hat CDN Service Account"
         description: "Credential type for Red Hat CDN service account"
         inputs:
