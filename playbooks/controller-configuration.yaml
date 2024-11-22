@@ -31,6 +31,7 @@
         controller_password: "{{ my_controller_pass }}"
         name: "Red Hat CDN Service Account"
         kind: cloud
+        state: present
         description: "Credential type for Red Hat CDN service account"
         inputs:
           fields:
@@ -48,6 +49,44 @@
             rhn_username: '{{ rhn_client_id }}'
       register: rhn_service_account_cred_type
 
+    - name: Create Red Hat CDN User/Pass credential type
+      ansible.controller.credential_type:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
+        name: "Red Hat CDN User/Pass"
+        description: "Credential type for Red Hat CDN user/pass"
+        state: present
+        kind: cloud
+        inputs:
+          fields:
+            - id: rhn_username
+              type: string
+              label: "RHN Username"
+            - id: rhn_password
+              type: string
+              label: "RHN Password"
+              secret: true
+        injectors:
+          extra_vars:
+            rhsm_username: "{{ rhn_username }}"
+            rhsm_password: "{{ rhn_password }}"
+      register: rhn_user_pass_cred_type
+
+    - name: Create Red Hat Automation Hub credential
+      ansible.controller.credential:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
+        name: "Red Hat Automation Hub"
+        organization: "Default"
+        credential_type: "Ansible Galaxy/Automation Hub API Token"
+        inputs:
+          galaxy_server_url: "{{ galaxy_server_url }}"
+          auth_server_url: "{{ galaxy_auth_server_url }}"
+          api_token: "{{ galaxy_api_token }}"
+      register: rhn_automation_hub_cred
+
 #############################################
     - name: Debugging information
       debug:
@@ -58,38 +97,11 @@
         msg: "Playbook intentionally stopped for debugging."
 #############################################
 
-    - name: Create Red Hat CDN User/Pass credential type
-      ansible.controller.credential_type:
-        name: "Red Hat CDN User/Pass"
-        description: "Credential type for Red Hat CDN user/pass"
-        inputs: |-
-          fields:
-            - id: rhn_username
-              type: string
-              label: "RHN Username"
-            - id: rhn_password
-              type: string
-              label: "RHN Password"
-              secret: true
-        injectors: |-
-          extra_vars:
-            rhsm_username: "{{ rhn_username }}"
-            rhsm_password: "{{ rhn_password }}"
-      register: rhn_user_pass_cred_type
-
-    - name: Create Red Hat Automation Hub credential
-      ansible.controller.credential:
-        name: "Red Hat Automation Hub"
-        organization: "Default"
-        credential_type: "Ansible Galaxy/Automation Hub API Token"
-        inputs:
-          galaxy_server_url: "{{ galaxy_server_url }}"
-          auth_server_url: "{{ galaxy_auth_server_url }}"
-          api_token: "{{ galaxy_api_token }}"
-      register: rhn_automation_hub_cred
-
     - name: Create Linux user/pass credential
       ansible.controller.credential:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
         name: "Linux user/pass"
         organization: "Default"
         credential_type: "Machine"
