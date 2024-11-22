@@ -28,7 +28,7 @@
       ansible.controller.credential_type:
         name: "Red Hat CDN Service Account"
         description: "Credential type for Red Hat CDN service account"
-        inputs: |-
+        inputs:
           fields:
             - id: rhn_client_id
               type: string
@@ -38,7 +38,7 @@
               type: string
               secret: true
               label: "RHN Client Secret"
-        injectors: |-
+        injectors:
           extra_vars:
             rhn_password: '{{ rhn_client_secret }}'
             rhn_username: '{{ rhn_client_id }}'
