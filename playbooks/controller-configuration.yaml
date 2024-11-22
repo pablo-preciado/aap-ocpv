@@ -1,0 +1,148 @@
+---
+- name: Configure Ansible Automation Controller
+  hosts: localhost
+  gather_facts: false
+
+# Execute the playbook like this:
+# 
+# export CONTROLLER_HOST="https://my-aap-aap.apps.cluster-qfgdv.qfgdv.gcp.redhatworkshops.io"
+# export CONTROLLER_USERNAME="admin"
+# export CONTROLLER_PASSWORD="HnklDeV8cAc3XQjcuPbXun1sRJRnhufj"
+# 
+# ansible-navigator run controller-configuration.yaml -m stdout  --penv CONTROLLER_HOST --penv CONTROLLER_USERNAME --penv CONTROLLER_PASSWORD
+# 
+  vars:
+    galaxy_server_url: w
+    galaxy_auth_server_url: a
+    galaxy_api_token: b
+    openshift_api_url: a
+    openshift_api_token: b
+    rhn_username: c
+    rhn_password: d
+    rhn_client_id: e
+    rhn_client_secret: f
+
+  tasks:
+
+    - name: Create Red Hat CDN Service Account credential type
+      ansible.controller.credential_type:
+        name: "Red Hat CDN Service Account"
+        description: "Credential type for Red Hat CDN service account"
+        inputs: |-
+          fields:
+            - id: rhn_client_id
+              type: string
+              secret: true
+              label: "RHN Client ID"
+            - id: rhn_client_secret
+              type: string
+              secret: true
+              label: "RHN Client Secret"
+        injectors: |-
+          extra_vars:
+            rhn_password: '{{ rhn_client_secret }}'
+            rhn_username: '{{ rhn_client_id }}'
+      register: rhn_service_account_cred_type
+
+#############################################
+    - name: Debugging information
+      debug:
+        msg: "Stopping for debugging purposes. Review the environment and resume manually if needed."
+    
+    - name: Fail to stop playbook
+      fail:
+        msg: "Playbook intentionally stopped for debugging."
+#############################################
+
+    - name: Create Red Hat CDN User/Pass credential type
+      ansible.controller.credential_type:
+        name: "Red Hat CDN User/Pass"
+        description: "Credential type for Red Hat CDN user/pass"
+        inputs: |-
+          fields:
+            - id: rhn_username
+              type: string
+              label: "RHN Username"
+            - id: rhn_password
+              type: string
+              label: "RHN Password"
+              secret: true
+        injectors: |-
+          extra_vars:
+            rhsm_username: "{{ rhn_username }}"
+            rhsm_password: "{{ rhn_password }}"
+      register: rhn_user_pass_cred_type
+
+    - name: Create Red Hat Automation Hub credential
+      ansible.controller.credential:
+        name: "Red Hat Automation Hub"
+        organization: "Default"
+        credential_type: "Ansible Galaxy/Automation Hub API Token"
+        inputs:
+          galaxy_server_url: "{{ galaxy_server_url }}"
+          auth_server_url: "{{ galaxy_auth_server_url }}"
+          api_token: "{{ galaxy_api_token }}"
+      register: rhn_automation_hub_cred
+
+    - name: Create Linux user/pass credential
+      ansible.controller.credential:
+        name: "Linux user/pass"
+        organization: "Default"
+        credential_type: "Machine"
+        inputs:
+          username: "redhat1"
+          password: "redhat1"
+      register: linux_user_pass_cred
+
+    - name: Create OpenShift Cluster credential
+      ansible.controller.credential:
+        name: "OpenShift Cluster"
+        organization: "Default"
+        credential_type: "OpenShift or Kubernetes API Bearer Token"
+        inputs:
+          api_url: "{{ openshift_api_url }}"
+          api_token: "{{ openshift_api_token }}"
+      register: openshift_cluster_cred
+
+    - name: Create My RHN username/password credential
+      ansible.controller.credential:
+        name: "My RHN username/password"
+        organization: "Default"
+        credential_type: Red Hat CDN User/Pass
+        inputs:
+          rhn_username: "{{ rhn_username }}"
+          rhn_password: "{{ rhn_password }}"
+      register: my_rhn_user_pass_cred
+
+    - name: Create My RHN Service Account credential
+      ansible.controller.credential:
+        name: "My RHN Service Account"
+        organization: "Default"
+        credential_type: "Red Hat CDN Service Account"
+        inputs:
+          rhn_client_id: "{{ rhn_client_id }}"
+          rhn_client_secret: "{{ rhn_client_secret }}"
+      register: my_rhn_service_account_cred
+
+    - name: Create OCP Virt project
+      ansible.controller.project:
+        name: "OCP Virt"
+        description: "OCP Virt project"
+        organization: "Default"
+        scm_type: "git"
+        scm_url: "https://github.com/pablo-preciado/aap-ocpv.git"
+      register: ocp_virt_project
+
+    - name: Create OCP Virt inventory
+      ansible.controller.inventory:
+        name: "OCP Virt"
+        organization: "Default"
+      register: ocp_virt_inventory
+
+    - name: Create OCP Virt inventory source
+      ansible.controller.inventory_source:
+        name: "OCP Virt"
+        inventory: "{{ ocp_virt_inventory.id }}"
+        source: "OpenShift Virtualization"
+        credential: "{{ openshift_cluster_cred.id }}"
+      register: ocp_virt_inventory_source
