@@ -4,3 +4,4 @@ collections:
 - name: kubernetes.core
 - name: redhat.eap
 - name: community.general
+- name: ansible.controller
