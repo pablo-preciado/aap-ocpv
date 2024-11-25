@@ -104,7 +104,10 @@
 
     - name: Export all assets
       ansible.controller.export:
-        all: True
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
+        all: true
 
 #############################################
     - name: Debugging information
