@@ -225,7 +225,7 @@
                 - identifier: inventory_sync_node
           - identifier: inventory_sync_node
             unified_job_template:
-              name: "Inventory Sync Job"
+              name: "OCP Virt"
               inventory:
                 organization:
                   name: Default
