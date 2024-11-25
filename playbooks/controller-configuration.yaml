@@ -2,15 +2,7 @@
 - name: Configure Ansible Automation Controller
   hosts: localhost
   gather_facts: false
-
-# Execute the playbook like this:
-# 
-# export CONTROLLER_HOST="https://my-aap-aap.apps.cluster-qfgdv.qfgdv.gcp.redhatworkshops.io"
-# export CONTROLLER_USERNAME="admin"
-# export CONTROLLER_PASSWORD="HnklDeV8cAc3XQjcuPbXun1sRJRnhufj"
-# 
-# ansible-navigator run controller-configuration.yaml -m stdout  --penv CONTROLLER_HOST --penv CONTROLLER_USERNAME --penv CONTROLLER_PASSWORD
-# 
+ 
   vars:
     galaxy_server_url: w
     galaxy_auth_server_url: a
@@ -23,16 +15,33 @@
     rhn_client_secret: f
 
   tasks:
-    
-    - name: Debugging
-      ansible.builtin.debug:
-        var: my_controller_fqdn
-    - name: Debugging
-      ansible.builtin.debug:
-        var: my_controller_user
-    - name: Debugging
-      ansible.builtin.debug:
-        var: my_controller_pass
+
+    #- name: Create Red Hat Automation Hub credential
+    #  ansible.controller.credential:
+    #    controller_host: "{{ my_controller_fqdn }}"
+    #    controller_username: "{{ my_controller_user }}"
+    #    controller_password: "{{ my_controller_pass }}"
+    #    name: "Red Hat Automation Hub"
+    #    organization: "Default"
+    #    state: present
+    #    credential_type: "Ansible Galaxy/Automation Hub API Token"
+    #    inputs:
+    #      galaxy_server_url: "{{ galaxy_server_url }}"
+    #      auth_server_url: "{{ galaxy_auth_server_url }}"
+    #      api_token: "{{ galaxy_api_token }}"
+    #  register: rhn_automation_hub_cred
+    #
+    #- name: Create OCP Virt project
+    #  ansible.controller.project:
+    #    controller_host: "{{ my_controller_fqdn }}"
+    #    controller_username: "{{ my_controller_user }}"
+    #    controller_password: "{{ my_controller_pass }}"
+    #    name: "OCP Virt"
+    #    description: "OCP Virt project"
+    #    organization: "Default"
+    #    scm_type: "git"
+    #    scm_url: "https://github.com/pablo-preciado/aap-ocpv.git"
+    #  register: ocp_virt_project
 
     - name: Create Red Hat CDN Service Account credential type
       ansible.controller.credential_type:
@@ -57,7 +66,6 @@
           extra_vars:
             rhn_password: '{{ rhn_client_secret }}'
             rhn_username: '{{ rhn_client_id }}'
-      register: rhn_service_account_cred_type
 
     - name: Create Red Hat CDN User/Pass credential type
       ansible.controller.credential_type:
@@ -79,24 +87,10 @@
               secret: true
         injectors:
           extra_vars:
-            rhsm_username: "{{ rhn_username }}"
-            rhsm_password: "{{ rhn_password }}"
-      register: rhn_user_pass_cred_type
-
-    #- name: Create Red Hat Automation Hub credential
-    #  ansible.controller.credential:
-    #    controller_host: "{{ my_controller_fqdn }}"
-    #    controller_username: "{{ my_controller_user }}"
-    #    controller_password: "{{ my_controller_pass }}"
-    #    name: "Red Hat Automation Hub"
-    #    organization: "Default"
-    #    state: present
-    #    credential_type: "Ansible Galaxy/Automation Hub API Token"
-    #    inputs:
-    #      galaxy_server_url: "{{ galaxy_server_url }}"
-    #      auth_server_url: "{{ galaxy_auth_server_url }}"
-    #      api_token: "{{ galaxy_api_token }}"
-    #  register: rhn_automation_hub_cred
+            rhsm_username: "{{ '{{ rhn_username }}' }}"
+            rhsm_password: "{{ '{{ rhn_password }}' }}"
+            #rhsm_username: "{{ rhn_username }}"
+            #rhsm_password: "{{ rhn_password }}"
 
     - name: Create Linux user/pass credential
       ansible.controller.credential:
@@ -110,7 +104,6 @@
         inputs:
           username: "redhat1"
           password: "redhat1"
-      register: linux_user_pass_cred
 
     - name: Create OpenShift Cluster credential
       ansible.controller.credential:
@@ -124,9 +117,6 @@
           host: "{{ openshift_api_url }}"
           verify_ssl: true
           bearer_token: "{{ openshift_api_token }}"
-          #api_url: 
-          #api_token: 
-      register: openshift_cluster_cred
 
     - name: Create My RHN username/password credential
       ansible.controller.credential:
@@ -139,7 +129,6 @@
         inputs:
           rhn_username: "{{ rhn_username }}"
           rhn_password: "{{ rhn_password }}"
-      register: my_rhn_user_pass_cred
 
     - name: Create My RHN Service Account credential
       ansible.controller.credential:
@@ -152,7 +141,6 @@
         inputs:
           rhn_client_id: "{{ rhn_client_id }}"
           rhn_client_secret: "{{ rhn_client_secret }}"
-      register: my_rhn_service_account_cred
 
     - name: Create OCP Virt inventory
       ansible.controller.inventory:
@@ -172,33 +160,3 @@
         inventory: "{{ ocp_virt_inventory.id }}"
         source: openshift_virtualization
         credential: "{{ openshift_cluster_cred.id }}"
-      register: ocp_virt_inventory_source
-
-#############################################
-    - name: Export all assets
-      ansible.controller.export:
-        controller_host: "{{ my_controller_fqdn }}"
-        controller_username: "{{ my_controller_user }}"
-        controller_password: "{{ my_controller_pass }}"
-        credentials: all
-
-    - name: Debugging information
-      debug:
-        msg: "Stopping for debugging purposes. Review the environment and resume manually if needed."
-    
-    - name: Fail to stop playbook
-      fail:
-        msg: "Playbook intentionally stopped for debugging."
-#############################################
-
-    #- name: Create OCP Virt project
-    #  ansible.controller.project:
-    #    controller_host: "{{ my_controller_fqdn }}"
-    #    controller_username: "{{ my_controller_user }}"
-    #    controller_password: "{{ my_controller_pass }}"
-    #    name: "OCP Virt"
-    #    description: "OCP Virt project"
-    #    organization: "Default"
-    #    scm_type: "git"
-    #    scm_url: "https://github.com/pablo-preciado/aap-ocpv.git"
-    #  register: ocp_virt_project
