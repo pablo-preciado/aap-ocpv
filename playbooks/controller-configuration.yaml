@@ -117,6 +117,7 @@
           host: "{{ openshift_api_url }}"
           verify_ssl: true
           bearer_token: "{{ openshift_api_token }}"
+      register: openshift_cluster_cred
 
     - name: Create My RHN username/password credential
       ansible.controller.credential:
