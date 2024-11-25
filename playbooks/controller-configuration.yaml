@@ -23,6 +23,9 @@
     rhn_client_secret: f
 
   tasks:
+    
+    - degug:
+        var: "{{ my_controller_fqdn }}"
 
     - name: Create Red Hat CDN Service Account credential type
       ansible.controller.credential_type:
