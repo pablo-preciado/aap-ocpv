@@ -102,6 +102,7 @@
         inputs:
           username: "redhat1"
           password: "redhat1"
+      register: credential_linux_machine
 
     - name: Create OpenShift Cluster credential
       ansible.controller.credential:
@@ -128,6 +129,7 @@
         inputs:
           rhn_username: "{{ rhn_username }}"
           rhn_password: "{{ rhn_password }}"
+      register: rhn_userpass_cred
 
     - name: Create My RHN Service Account credential
       ansible.controller.credential:
@@ -140,6 +142,7 @@
         inputs:
           rhn_client_id: "{{ rhn_client_id }}"
           rhn_client_secret: "{{ rhn_client_secret }}"
+      register: rhn_sa_cred
 
     - name: Create OCP Virt inventory
       ansible.controller.inventory:
@@ -185,9 +188,9 @@
         project: "OCP Virt"
         playbook: "playbooks/install_jboss.yml"
         credentials:
-          - "Linux ssh user/pass"
-          - "My RHN Service Account"
-          - "My RHN Username/Password"
+          - "{{ credential_linux_machine.id }}"
+          - "{{ rhn_userpass_cred.id }}"
+          - "{{ rhn_sa_cred.id }}"
         state: present
     
     - name: Create job template [JT] Deploy hello world application
@@ -201,8 +204,9 @@
         project: "OCP Virt"
         playbook: "playbooks/deploy_app.yml"
         credentials:
-          - "Linux ssh user/pass"
+          - "{{ credential_linux_machine.id }}"
         state: present
+
     - name: Create workflow job template [WF] Create VM and install Jboss
       ansible.controller.workflow_job_template:
         controller_host: "{{ my_controller_fqdn }}"
