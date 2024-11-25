@@ -27,6 +27,12 @@
     - name: Debugging
       ansible.builtin.debug:
         var: my_controller_fqdn
+    - name: Debugging
+      ansible.builtin.debug:
+        var: my_controller_user
+    - name: Debugging
+      ansible.builtin.debug:
+        var: my_controller_pass
 
     - name: Create Red Hat CDN Service Account credential type
       ansible.controller.credential_type:
