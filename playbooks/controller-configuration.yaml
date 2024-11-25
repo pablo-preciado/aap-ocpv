@@ -171,7 +171,7 @@
         project: "OCP Virt"
         playbook: "playbooks/create_vm.yml"
         credentials:
-          - "Openshift Cluster"
+          - "{{ openshift_cluster_cred.id }}"
         state: present
 
     - name: Create job template [JT] Install and deploy Jboss EAP 8
