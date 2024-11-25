@@ -207,31 +207,38 @@
           - "{{ credential_linux_machine.id }}"
         state: present
 
-    - name: Create workflow job template [WF] Create VM and install Jboss
-      ansible.controller.workflow_job_template:
-        controller_host: "{{ my_controller_fqdn }}"
-        controller_username: "{{ my_controller_user }}"
-        controller_password: "{{ my_controller_pass }}"
-        name: "[WF] Create VM and install Jboss"
-        description: "Workflow template to create VM, install Jboss, and deploy an app"
-        inventory: "OCP Virt"
-        workflow_nodes:
-          - identifier: create_vm_node
-            unified_job_template:
-              name: "[JT] Create VM"
-              type: job_template
-            related:
-              success_nodes:
-                - identifier: install_jboss_node
-          - identifier: install_jboss_node
-            unified_job_template:
-              name: "[JT] Install and deploy Jboss EAP 8"
-              type: job_template
-            related:
-              success_nodes:
-                - identifier: deploy_app_node
-          - identifier: deploy_app_node
-            unified_job_template:
-              name: "[JT] Deploy hello world application"
-              type: job_template
-        state: present
+  - name: Create workflow job template [WF] Create VM and install Jboss
+    ansible.controller.workflow_job_template:
+      controller_host: "{{ my_controller_fqdn }}"
+      controller_username: "{{ my_controller_user }}"
+      controller_password: "{{ my_controller_pass }}"
+      name: "[WF] Create VM and install Jboss"
+      description: "Workflow template to create VM, install Jboss, and deploy an app"
+      inventory: "OCP Virt"
+      workflow_nodes:
+        - identifier: create_vm_node
+          unified_job_template:
+            name: "[JT] Create VM"
+            type: job_template
+          related:
+            success_nodes:
+              - identifier: inventory_sync_node
+        - identifier: inventory_sync_node
+          unified_job_template:
+            name: "Inventory Sync Job"
+            type: inventory_source
+          related:
+            success_nodes:
+              - identifier: install_jboss_node
+        - identifier: install_jboss_node
+          unified_job_template:
+            name: "[JT] Install and deploy Jboss EAP 8"
+            type: job_template
+          related:
+            success_nodes:
+              - identifier: deploy_app_node
+        - identifier: deploy_app_node
+          unified_job_template:
+            name: "[JT] Deploy hello world application"
+            type: job_template
+      state: present
