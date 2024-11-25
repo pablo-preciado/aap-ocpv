@@ -170,7 +170,7 @@
         controller_password: "{{ my_controller_pass }}"
         name: "OCP Virt"
         inventory: "{{ ocp_virt_inventory.id }}"
-        source: "OpenShift Virtualization"
+        source: openshift_virtualization
         credential: "{{ openshift_cluster_cred.id }}"
       register: ocp_virt_inventory_source
 
