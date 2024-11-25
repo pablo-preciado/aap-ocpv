@@ -3,16 +3,16 @@
   hosts: localhost
   gather_facts: false
  
-  vars:
-    my_controller_fqdn: a
-    controller_username: b
-    controller_password: c
-    openshift_api_url: a
-    openshift_api_token: b
-    rhn_username: c
-    rhn_password: d
-    rhn_client_id: e
-    rhn_client_secret: f
+  #vars:
+  #  my_controller_fqdn: a
+  #  controller_username: b
+  #  controller_password: c
+  #  openshift_api_url: d
+  #  openshift_api_token: e
+  #  rhn_username: f
+  #  rhn_password: g
+  #  rhn_client_id: h
+  #  rhn_client_secret: i
 
   tasks:
 
