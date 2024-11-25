@@ -128,23 +128,6 @@
           #api_token: 
       register: openshift_cluster_cred
 
-#############################################
-    - name: Export all assets
-      ansible.controller.export:
-        controller_host: "{{ my_controller_fqdn }}"
-        controller_username: "{{ my_controller_user }}"
-        controller_password: "{{ my_controller_pass }}"
-        credentials: all
-
-    - name: Debugging information
-      debug:
-        msg: "Stopping for debugging purposes. Review the environment and resume manually if needed."
-    
-    - name: Fail to stop playbook
-      fail:
-        msg: "Playbook intentionally stopped for debugging."
-#############################################
-
     - name: Create My RHN username/password credential
       ansible.controller.credential:
         controller_host: "{{ my_controller_fqdn }}"
@@ -170,6 +153,23 @@
           rhn_client_id: "{{ rhn_client_id }}"
           rhn_client_secret: "{{ rhn_client_secret }}"
       register: my_rhn_service_account_cred
+
+#############################################
+    - name: Export all assets
+      ansible.controller.export:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
+        credentials: all
+
+    - name: Debugging information
+      debug:
+        msg: "Stopping for debugging purposes. Review the environment and resume manually if needed."
+    
+    - name: Fail to stop playbook
+      fail:
+        msg: "Playbook intentionally stopped for debugging."
+#############################################
 
     #- name: Create OCP Virt project
     #  ansible.controller.project:
