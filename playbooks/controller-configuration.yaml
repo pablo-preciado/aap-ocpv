@@ -4,9 +4,9 @@
   gather_facts: false
  
   vars:
-    galaxy_server_url: w
-    galaxy_auth_server_url: a
-    galaxy_api_token: b
+    my_controller_fqdn: a
+    controller_username: b
+    controller_password: c
     openshift_api_url: a
     openshift_api_token: b
     rhn_username: c
@@ -159,3 +159,75 @@
         inventory: "{{ ocp_virt_inventory.id }}"
         source: openshift_virtualization
         credential: "{{ openshift_cluster_cred.id }}"
+
+    - name: Create job template [JT] Create VM
+      ansible.controller.job_template:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
+        name: "[JT] Create VM"
+        description: "Job template for creating virtual machines"
+        inventory: "OCP Virt"
+        project: "OCP Virt"
+        playbook: "playbooks/create_vm.yml"
+        credentials:
+          - "Openshift Cluster"
+        state: present
+
+    - name: Create job template [JT] Install and deploy Jboss EAP 8
+      ansible.controller.job_template:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
+        name: "[JT] Install and deploy Jboss EAP 8"
+        description: "Job template for installing and deploying Jboss EAP 8"
+        inventory: "OCP Virt"
+        project: "OCP Virt"
+        playbook: "playbooks/install_jboss.yml"
+        credentials:
+          - "Linux ssh user/pass"
+          - "My RHN Service Account"
+          - "My RHN Username/Password"
+        state: present
+    
+    - name: Create job template [JT] Deploy hello world application
+      ansible.controller.job_template:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
+        name: "[JT] Deploy hello world application"
+        description: "Job template for deploying the hello world application"
+        inventory: "OCP Virt"
+        project: "OCP Virt"
+        playbook: "playbooks/deploy_app.yml"
+        credentials:
+          - "Linux ssh user/pass"
+        state: present
+    - name: Create workflow job template [WF] Create VM and install Jboss
+      ansible.controller.workflow_job_template:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
+        name: "[WF] Create VM and install Jboss"
+        description: "Workflow template to create VM, install Jboss, and deploy an app"
+        inventory: "OCP Virt"
+        workflow_nodes:
+          - identifier: create_vm_node
+            unified_job_template:
+              name: "[JT] Create VM"
+              type: job_template
+            related:
+              success_nodes:
+                - identifier: install_jboss_node
+          - identifier: install_jboss_node
+            unified_job_template:
+              name: "[JT] Install and deploy Jboss EAP 8"
+              type: job_template
+            related:
+              success_nodes:
+                - identifier: deploy_app_node
+          - identifier: deploy_app_node
+            unified_job_template:
+              name: "[JT] Deploy hello world application"
+              type: job_template
+        state: present
