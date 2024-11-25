@@ -102,14 +102,18 @@
           password: "redhat1"
       register: linux_user_pass_cred
 
+    - name: Export all assets
+      ansible.controller.export:
+        all: True
+
 #############################################
-    #- name: Debugging information
-    #  debug:
-    #    msg: "Stopping for debugging purposes. Review the environment and resume manually if needed."
-    #
-    #- name: Fail to stop playbook
-    #  fail:
-    #    msg: "Playbook intentionally stopped for debugging."
+    - name: Debugging information
+      debug:
+        msg: "Stopping for debugging purposes. Review the environment and resume manually if needed."
+    
+    - name: Fail to stop playbook
+      fail:
+        msg: "Playbook intentionally stopped for debugging."
 #############################################
 
     - name: Create OpenShift Cluster credential
