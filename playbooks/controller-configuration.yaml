@@ -154,6 +154,26 @@
           rhn_client_secret: "{{ rhn_client_secret }}"
       register: my_rhn_service_account_cred
 
+    - name: Create OCP Virt inventory
+      ansible.controller.inventory:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"      
+        name: "OCP Virt"
+        organization: "Default"
+      register: ocp_virt_inventory
+
+    - name: Create OCP Virt inventory source
+      ansible.controller.inventory_source:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
+        name: "OCP Virt"
+        inventory: "{{ ocp_virt_inventory.id }}"
+        source: "OpenShift Virtualization"
+        credential: "{{ openshift_cluster_cred.id }}"
+      register: ocp_virt_inventory_source
+
 #############################################
     - name: Export all assets
       ansible.controller.export:
@@ -182,23 +202,3 @@
     #    scm_type: "git"
     #    scm_url: "https://github.com/pablo-preciado/aap-ocpv.git"
     #  register: ocp_virt_project
-
-    - name: Create OCP Virt inventory
-      ansible.controller.inventory:
-        controller_host: "{{ my_controller_fqdn }}"
-        controller_username: "{{ my_controller_user }}"
-        controller_password: "{{ my_controller_pass }}"      
-        name: "OCP Virt"
-        organization: "Default"
-      register: ocp_virt_inventory
-
-    - name: Create OCP Virt inventory source
-      ansible.controller.inventory_source:
-        controller_host: "{{ my_controller_fqdn }}"
-        controller_username: "{{ my_controller_user }}"
-        controller_password: "{{ my_controller_pass }}"
-        name: "OCP Virt"
-        inventory: "{{ ocp_virt_inventory.id }}"
-        source: "OpenShift Virtualization"
-        credential: "{{ openshift_cluster_cred.id }}"
-      register: ocp_virt_inventory_source
