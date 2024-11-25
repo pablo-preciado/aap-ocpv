@@ -64,8 +64,8 @@
               label: "RHN Client Secret"
         injectors:
           extra_vars:
-            rhn_password: '{{ rhn_client_secret }}'
-            rhn_username: '{{ rhn_client_id }}'
+            rhn_password: "{{ '{{ rhn_client_secret }}' }}"
+            rhn_username: "{{ '{{ rhn_client_id }}' }}"
 
     - name: Create Red Hat CDN User/Pass credential type
       ansible.controller.credential_type:
@@ -89,8 +89,6 @@
           extra_vars:
             rhsm_username: "{{ '{{ rhn_username }}' }}"
             rhsm_password: "{{ '{{ rhn_password }}' }}"
-            #rhsm_username: "{{ rhn_username }}"
-            #rhsm_password: "{{ rhn_password }}"
 
     - name: Create Linux user/pass credential
       ansible.controller.credential:
