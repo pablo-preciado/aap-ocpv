@@ -135,10 +135,10 @@
         controller_password: "{{ my_controller_pass }}"      
         name: "My RHN username/password"
         organization: "Default"
-        credential_type: Red Hat CDN User/Pass
+        credential_type: "Red Hat CDN User/Pass"
         inputs:
-          username: "{{ rhn_username }}"
-          password: "{{ rhn_password }}"
+          rhn_username: "{{ rhn_username }}"
+          rhn_password: "{{ rhn_password }}"
       register: my_rhn_user_pass_cred
 
     - name: Create My RHN Service Account credential
