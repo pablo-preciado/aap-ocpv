@@ -107,8 +107,7 @@
         controller_host: "{{ my_controller_fqdn }}"
         controller_username: "{{ my_controller_user }}"
         controller_password: "{{ my_controller_pass }}"
-        all: True
-        #credentials: 'Linux user/pass'
+        credentials: all
 
 #############################################
     - name: Debugging information
