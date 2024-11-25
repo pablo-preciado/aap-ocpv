@@ -226,9 +226,8 @@
           - identifier: inventory_sync_node
             unified_job_template:
               name: "Inventory Sync Job"
-              inventory:
-                organization:
-                  name: Default
+              organization:
+                name: Default
               type: inventory_source
             related:
               success_nodes:
