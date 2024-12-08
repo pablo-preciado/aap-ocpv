@@ -72,7 +72,7 @@ oc whoami --show-token
 To obtain the data of your Service Account use a browser to navigate to [Red Hat Cloud Console](https://console.redhat.com/application-services/service-accounts). Click on Create service account and save your Client ID and Client Secret.
 
 Now create the Job Template for configuring the Ansible Automation Controller. Go to Automation Execution > Templates > Create Template > Create Job Template. Fill with the following information:
- - Name: Configure controller
+ - Name: [CasC] Configure controller
  - Inventory: Demo Inventory
  - Project: OCP Virt
  - Playbook: playbooks/controller-configuration.yml
@@ -91,7 +91,7 @@ rhn_client_secret: your-red-hat-cdn-client-secret
 
 ![AAP Create job template](images/controller-configuration-template.png)
 
-Run the job template. Be aware that running this job will delete the Job Template "Configure controller" in order to keep your passwords safe during the demo.
+Run the job template.
 ___________________________________________________________________________________
 
 Install OpenShift Virtualization and Ansible Automation Platform operators.

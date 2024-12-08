@@ -215,11 +215,3 @@
         controller_password: "{{ my_controller_pass }}"
         name: Demo Job Template
         state: absent
-
-    - name: Delete "Configure controller" job template
-      ansible.controller.job_template:
-        controller_host: "{{ my_controller_fqdn }}"
-        controller_username: "{{ my_controller_user }}"
-        controller_password: "{{ my_controller_pass }}"
-        name: Configure controller
-        state: absent
