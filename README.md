@@ -91,7 +91,7 @@ rhn_client_secret: your-red-hat-cdn-client-secret
 
 ![AAP Create job template](images/controller-configuration-template.png)
 
-Run the job template.
+Run the job template. Be aware that running this job will delete the Job Template "Configure controller" in order to keep your passwords safe during the demo.
 ___________________________________________________________________________________
 
 Install OpenShift Virtualization and Ansible Automation Platform operators.
