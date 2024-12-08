@@ -3,45 +3,7 @@
   hosts: localhost
   gather_facts: false
  
-  #vars:
-  #  my_controller_fqdn: a
-  #  controller_username: b
-  #  controller_password: c
-  #  openshift_api_url: d
-  #  openshift_api_token: e
-  #  rhn_username: f
-  #  rhn_password: g
-  #  rhn_client_id: h
-  #  rhn_client_secret: i
-
   tasks:
-
-    #- name: Create Red Hat Automation Hub credential
-    #  ansible.controller.credential:
-    #    controller_host: "{{ my_controller_fqdn }}"
-    #    controller_username: "{{ my_controller_user }}"
-    #    controller_password: "{{ my_controller_pass }}"
-    #    name: "Red Hat Automation Hub"
-    #    organization: "Default"
-    #    state: present
-    #    credential_type: "Ansible Galaxy/Automation Hub API Token"
-    #    inputs:
-    #      galaxy_server_url: "{{ galaxy_server_url }}"
-    #      auth_server_url: "{{ galaxy_auth_server_url }}"
-    #      api_token: "{{ galaxy_api_token }}"
-    #  register: rhn_automation_hub_cred
-    #
-    #- name: Create OCP Virt project
-    #  ansible.controller.project:
-    #    controller_host: "{{ my_controller_fqdn }}"
-    #    controller_username: "{{ my_controller_user }}"
-    #    controller_password: "{{ my_controller_pass }}"
-    #    name: "OCP Virt"
-    #    description: "OCP Virt project"
-    #    organization: "Default"
-    #    scm_type: "git"
-    #    scm_url: "https://github.com/pablo-preciado/aap-ocpv.git"
-    #  register: ocp_virt_project
 
     - name: Create Red Hat CDN Service Account credential type
       ansible.controller.credential_type:
@@ -245,3 +207,11 @@
               name: "[JT] Deploy hello world application"
               type: job_template
         state: present
+
+    - name: Delete "Demo Job Template" job template
+      ansible.controller.job_template:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
+        name: Demo Job Template
+        state: absent
