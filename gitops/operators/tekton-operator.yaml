@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: openshift-pipelines-operator
+  namespace: openshift-operators
+spec:
+  channel: latest #Specify the channel name from where you want to subscribe the Operator
+  name: openshift-pipelines-operator-rh #Name of the Operator to subscribe to.
+  source: redhat-operators #Name of the CatalogSource that provides the Operator.
+  sourceNamespace: openshift-marketplace #Namespace of the CatalogSource. Use openshift-marketplace for the default OperatorHub CatalogSources.
