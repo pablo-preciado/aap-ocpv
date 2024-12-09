@@ -7,11 +7,17 @@ spec:
     - list:
         elements:
           - name: demo-operators
-            path: gitops/operators
+            path: gitops/1-operators
             syncWave: "1"
-          - name: demo-crds
-            path: gitops/crd-instances
+          - name: demo-preparation-before-crds
+            path: gitops/2-preparation-before-crds
             syncWave: "2"
+          - name: demo-crds
+            path: gitops/3-crd-instances
+            syncWave: "3"
+          - name: demo-post-crds
+            path: gitops/4-post-crds
+            syncWave: "3"
   template:
     metadata:
       name: "{{name}}"
