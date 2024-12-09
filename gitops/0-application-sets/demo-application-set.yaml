@@ -6,18 +6,18 @@ spec:
   generators:
     - list:
         elements:
-          - name: demo-operators
+          - name: 1-demo-operators
             path: gitops/1-operators
             syncWave: "1"
-          - name: demo-preparation-before-crds
+          - name: 2-demo-preparation-before-crds
             path: gitops/2-preparation-before-crds
             syncWave: "2"
-          - name: demo-crds
+          - name: 3-demo-crds
             path: gitops/3-crd-instances
             syncWave: "3"
-          - name: demo-post-crds
+          - name: 4-demo-post-crds
             path: gitops/4-post-crds
-            syncWave: "3"
+            syncWave: "4"
   template:
     metadata:
       name: "{{name}}"
