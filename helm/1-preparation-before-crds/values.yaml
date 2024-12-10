@@ -1,5 +1,9 @@
 developerhub:
   namespaceName: rhdh-operator
+  appconfigConfigMapName: my-backstage-appconfig-developer-hub
+  dynamicPluginsConfigMapName: my-backstage-dynamic-plugins-developer-hub
+  instanceName: developer-hub
+  rhdhSecretName: secrets-rhdh
 keycloakSecret:
   namespaceName: keycloak
   secretName: my-tls-secret

@@ -2,8 +2,8 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: my-backstage-dynamic-plugins-developer-hub
-  namespace: rhdh-operator
+  name: '{{ .Values.developerhub.dynamicPluginsConfigMapName }}'
+  namespace: '{{ .Values.developerhub.namespaceName }}'
 data:
   dynamic-plugins.yaml: |
     includes:
@@ -71,10 +71,10 @@ data:
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: my-backstage-appconfig-developer-hub
-  namespace: rhdh-operator
+  name: '{{ .Values.developerhub.appconfigConfigMapName }}'
+  namespace: '{{ .Values.developerhub.namespaceName }}'
   labels:
-    app.kubernetes.io/instance: developer-hub
+    app.kubernetes.io/instance: '{{ .Values.developerhub.instanceName }}'
     app.kubernetes.io/name: backstage
 data:
   my.app-config.yaml: |
