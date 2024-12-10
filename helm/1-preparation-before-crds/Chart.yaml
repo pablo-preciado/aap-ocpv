@@ -1,0 +1,4 @@
+apiVersion: v2
+name: my-demo-preparation-before-crds
+version: 0.1.0
+description: A Helm chart for deploying all the reosources needed before deploying the operators CRD's
