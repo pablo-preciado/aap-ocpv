@@ -29,7 +29,7 @@ spec:
         targetRevision: main
         chart: '{{chart}}'
         #helm:
-        #  parameters:
+        #  parameters: []
         #    - name: rhdhSecret.password
         #      value: "{{ .Values.rhdhSecret.password }}"
       destination:
