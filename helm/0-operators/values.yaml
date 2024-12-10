@@ -20,5 +20,3 @@ openshiftVirtualization:
   subscriptionName: kubevirt-hyperconverged
 tekton:
   subscriptionName: openshift-pipelines-operator
-
-## parametrize using {{ .Values.aap.namespaceName }}

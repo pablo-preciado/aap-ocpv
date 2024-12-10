@@ -1,21 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: my-demo
+  name: my-demo-application-set
   namespace: openshift-gitops
 spec:
   generators:
-    list:
-      elements:
-        - chart: helm/0-operators
-          name: 0-operators
-          wave: 0
-        #- chart: helm/developerhub
-        #  name: developerhub
-        #  wave: 1
-        #- chart: helm/aap
-        #  name: aap
-        #  wave: 2
+    - list:
+        elements:
+          - chart: helm/0-operators
+            name: 0-operators
+            wave: 0
+          #- chart: helm/developerhub
+          #  name: developerhub
+          #  wave: 1
+          #- chart: helm/aap
+          #  name: aap
+          #  wave: 2
   template:
     metadata:
       name: '{{name}}'
@@ -28,10 +28,10 @@ spec:
         repoURL: 'https://github.com/pablo-preciado/aap-ocpv'
         targetRevision: main
         chart: '{{chart}}'
-        helm:
-          parameters:
-            - name: rhdhSecret.password
-              value: "{{ .Values.rhdhSecret.password }}"
+        #helm:
+        #  parameters:
+        #    - name: rhdhSecret.password
+        #      value: "{{ .Values.rhdhSecret.password }}"
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:
