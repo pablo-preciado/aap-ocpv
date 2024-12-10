@@ -1,0 +1,30 @@
+apiVersion: apps.gitlab.com/v1beta1
+kind: GitLab
+metadata:
+  name: '{{ .Values.gitlab.instanceName }}'
+  namespace: '{{ .Values.gitlab.namespaceName }}'
+spec:
+  chart:
+    values:
+      prometheus:
+        alertmanager:
+          enabled: false
+        pushgateway:
+          enabled: false
+        server:
+          enabled: false
+      nginx-ingress:
+        enabled: false
+      certmanager:
+        install: false
+      global:
+        hosts:
+          domain: '{{ .Values.gitlab.clusterDomain }}'
+        ingress:
+          class: none
+          annotations:
+            route.openshift.io/termination: "edge"
+      postgresql:
+        primary:
+          extendedConfiguration: max_connections = 200
+    version: 8.6.1

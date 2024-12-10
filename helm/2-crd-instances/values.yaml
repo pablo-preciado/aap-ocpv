@@ -15,3 +15,7 @@ keycloak:
 aap:
   instanceName: my-aap
   namespaceName: aap
+gitlab:
+  instanceName: gitlab
+  namespaceName: gitlab-system
+  clusterDomain: apps.cluster-qql8d.qql8d.gcp.redhatworkshops.io
