@@ -7,42 +7,41 @@ spec:
   generators:
     - list:
         elements:
-          - chart: helm/0-operators
-            name: 0-operators
-            wave: 0
-          #- chart: helm/developerhub
-          #  name: developerhub
-          #  wave: 1
-          #- chart: helm/aap
-          #  name: aap
-          #  wave: 2
+          - name: 0-operators
+            path: helm/0-operators
+            syncWave: '0'
+          #- name: 2-demo-preparation-before-crds
+          #  path: gitops/2-preparation-before-crds
+          #  syncWave: "2"
+          #- name: 3-demo-crds
+          #  path: gitops/3-crd-instances
+          #  syncWave: "3"
+          #- name: 4-demo-post-crds
+          #  path: gitops/4-post-crds
+          #  syncWave: "4"
   template:
     metadata:
-      name: "{{name}}"
       annotations:
-        argocd.argoproj.io/sync-wave: "{{syncWave}}"
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: '{{syncWave}}'
+      name: '{{name}}'
     spec:
+      destination:
+        server: 'https://kubernetes.default.svc'
       project: default
       source:
+        path: '{{path}}'
         repoURL: 'https://github.com/pablo-preciado/aap-ocpv'
-        targetRevision: main
-        chart: '{{chart}}'
-        #helm:
-        #  parameters: []
-        #    - name: rhdhSecret.password
-        #      value: "{{ .Values.rhdhSecret.password }}"
-      destination:
-        server: https://kubernetes.default.svc
+        targetRevision: HEAD
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
+        retry:
+          backoff:
+            duration: 30s
+            factor: 2
+            maxDuration: 10m
+          limit: 10
         syncOptions:
           - CreateNamespace=true
-        retry:
-          limit: 10
-          backoff:
-            duration: "30s"
-            factor: 2
-            maxDuration: "10m"
