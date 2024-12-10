@@ -1,0 +1,13 @@
+kind: Keycloak
+apiVersion: k8s.keycloak.org/v2alpha1
+metadata:
+  name: '{{ .Values.keycloak.instanceName }}'
+  labels:
+    app: sso
+  namespace: '{{ .Values.keycloak.namespaceName }}'
+spec:
+  instances: 1
+  hostname:
+    hostname: '{{ .Values.keycloak.hostname }}'
+  http:
+    tlsSecret: '{{ .Values.keycloak.tlsSecretName }}'

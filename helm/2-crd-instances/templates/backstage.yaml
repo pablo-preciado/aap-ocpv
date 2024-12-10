@@ -1,13 +1,13 @@
 apiVersion: rhdh.redhat.com/v1alpha2
 kind: Backstage
 metadata:
-  name: developer-hub
-  namespace: rhdh-operator
+  name: '{{ .Values.developerhub.instanceName }}'
+  namespace: '{{ .Values.developerhub.namespaceName }}'
 spec:
   application:
     appConfig:
       configMaps:
-        - name: my-backstage-appconfig-developer-hub
+        - name: '{{ .Values.developerhub.appconfigConfigMapName }}'
           key: my.app-config.yaml
     extraEnvs:
       envs:
@@ -21,6 +21,6 @@ spec:
     replicas: 1
     route:
       enabled: true
-    dynamicPluginsConfigMapName: my-backstage-dynamic-plugins-developer-hub
+    dynamicPluginsConfigMapName: '{{ .Values.developerhub.dynamicPluginsConfigMapName }}'
   database:
     enableLocalDb: true   

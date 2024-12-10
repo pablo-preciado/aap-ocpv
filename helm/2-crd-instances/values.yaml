@@ -1,0 +1,17 @@
+developerhub:
+  instanceName: developer-hub
+  namespaceName: rhdh-operator
+  appconfigConfigMapName: my-backstage-appconfig-developer-hub
+  dynamicPluginsConfigMapName: my-backstage-dynamic-plugins-developer-hub
+  rhdhSecretName: secrets-rhdh
+openshiftVirtualization:
+  instanceName: kubevirt-hyperconverged
+  namespaceName: openshift-cnv
+keycloak:
+  instanceName: example-keycloak
+  namespaceName: keycloak
+  hostname: keycloak.apps.cluster-wdw6r.wdw6r.gcp.redhatworkshops.io
+  tlsSecretName: my-tls-secret
+aap:
+  instanceName: my-aap
+  namespaceName: aap

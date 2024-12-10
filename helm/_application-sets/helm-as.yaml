@@ -13,9 +13,9 @@ spec:
           - name: 1-demo-preparation-before-crds
             path: helm/1-preparation-before-crds
             syncWave: "1"
-          #- name: 3-demo-crds
-          #  path: gitops/3-crd-instances
-          #  syncWave: "3"
+          - name: 2-demo-crds
+            path: helm/2-crd-instances
+            syncWave: "2"
           #- name: 4-demo-post-crds
           #  path: gitops/4-post-crds
           #  syncWave: "4"

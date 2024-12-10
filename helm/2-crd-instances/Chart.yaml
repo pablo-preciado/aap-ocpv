@@ -1,0 +1,4 @@
+apiVersion: v2
+name: my-demo-crd-instances
+version: 0.1.0
+description: A Helm chart for deploying all instances of CRD's needed for the demo
