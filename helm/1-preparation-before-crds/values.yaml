@@ -1,4 +1,8 @@
+developerhub:
+  namespaceName: rhdh-operator
 keycloakSecret:
+  namespaceName: keycloak
+  secretName: my-tls-secret
   crtFile: |
     -----BEGIN CERTIFICATE-----
     MIIDZTCCAk2gAwIBAgIUXO3T8gRvoDE4SBOTdKhf55BBs6MwDQYJKoZIhvcNAQEL
