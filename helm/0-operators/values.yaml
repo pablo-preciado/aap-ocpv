@@ -1,0 +1,24 @@
+aap:
+  namespaceName: aap
+  operatorGroupName: aap-operatorgroup
+  subscriptionName: ansible-automation-platform-operator
+developerhub:
+  namespaceName: rhdh-operator
+  operatorGroupName: rhdh-operatorgroup
+  subscriptionName: rhdh2vm
+gitlab:
+  namespaceName: gitlab-system
+  operatorGroupName: gitlab-system-operator-group
+  subscriptionName: gitlab-operator-kubernetes
+keycloak:
+  namespaceName: keycloak
+  operatorGroupName: keycloak-operatorgroup
+  subscriptionName: keycloak-subscription
+openshiftVirtualization:
+  namespaceName: openshift-cnv
+  operatorGroupName: openshift-cnv-operatorgroup
+  subscriptionName: kubevirt-hyperconverged
+tekton:
+  subscriptionName: openshift-pipelines-operator
+
+## parametrize using {{ .Values.aap.namespaceName }}

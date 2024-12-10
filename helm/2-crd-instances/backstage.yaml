@@ -1,0 +1,26 @@
+apiVersion: rhdh.redhat.com/v1alpha2
+kind: Backstage
+metadata:
+  name: developer-hub
+  namespace: rhdh-operator
+spec:
+  application:
+    appConfig:
+      configMaps:
+        - name: my-backstage-appconfig-developer-hub
+          key: my.app-config.yaml
+    extraEnvs:
+      envs:
+        - name: NODE_TLS_REJECT_UNAUTHORIZED
+          value: '0'    
+      secrets:
+        - name: "secrets-rhdh"
+      mountPath: /opt/app-root/src
+    extraFiles:
+      mountPath: /opt/app-root/src
+    replicas: 1
+    route:
+      enabled: true
+    dynamicPluginsConfigMapName: my-backstage-dynamic-plugins-developer-hub
+  database:
+    enableLocalDb: true   

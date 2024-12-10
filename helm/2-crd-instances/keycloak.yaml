@@ -1,0 +1,13 @@
+kind: Keycloak
+apiVersion: k8s.keycloak.org/v2alpha1
+metadata:
+  name: example-keycloak
+  labels:
+    app: sso
+  namespace: keycloak
+spec:
+  instances: 1
+  hostname:
+    hostname: keycloak.apps.cluster-wdw6r.wdw6r.gcp.redhatworkshops.io
+  http:
+    tlsSecret: my-tls-secret

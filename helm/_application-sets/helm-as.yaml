@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: my-demo
+  namespace: openshift-gitops
+spec:
+  generators:
+    list:
+      elements:
+        - chart: helm/0-operators
+          name: 0-operators
+          wave: 0
+        #- chart: helm/developerhub
+        #  name: developerhub
+        #  wave: 1
+        #- chart: helm/aap
+        #  name: aap
+        #  wave: 2
+  template:
+    metadata:
+      name: '{{name}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: "{{syncWave}}"
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/pablo-preciado/aap-ocpv'
+        targetRevision: main
+        chart: '{{chart}}'
+        helm:
+          parameters:
+            - name: rhdhSecret.password
+              value: "{{ .Values.rhdhSecret.password }}"
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+        retry:
+          limit: 10
+          backoff:
+            duration: "30s"
+            factor: 2
+            maxDuration: "10m"
