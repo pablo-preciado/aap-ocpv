@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: '0'
+  name: 0-operators
+  namespace: openshift-gitops
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    chart: helm/0-operators
+    repoURL: 'https://github.com/pablo-preciado/aap-ocpv'
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 10m
+      limit: 10
+    syncOptions:
+      - CreateNamespace=true
+status:
+  conditions:
+    - lastTransitionTime: '2024-12-10T08:51:48Z'
+      message: 'Failed to load target state: failed to generate manifest for source 1 of 1: rpc error: code = Unknown desc = invalid revision ''main'': improper constraint: main'
+      type: ComparisonError
+    - lastTransitionTime: '2024-12-10T09:00:28Z'
+      message: spec.source.targetRevision is required if the manifest source is a helm chart
+      type: InvalidSpecError
+  controllerNamespace: openshift-gitops
+  health:
+    status: Unknown
+  reconciledAt: '2024-12-10T08:51:48Z'
+  sync:
+    comparedTo:
+      destination:
+        server: 'https://kubernetes.default.svc'
+      source:
+        path: helm/0-operators
+        repoURL: 'https://github.com/pablo-preciado/aap-ocpv.git'
+        targetRevision: main
+    status: Unknown

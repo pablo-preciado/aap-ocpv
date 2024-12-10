@@ -18,7 +18,7 @@ spec:
           #  wave: 2
   template:
     metadata:
-      name: '{{name}}'
+      name: "{{name}}"
       annotations:
         argocd.argoproj.io/sync-wave: "{{syncWave}}"
         argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
