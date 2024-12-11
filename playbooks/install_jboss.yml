@@ -19,7 +19,7 @@
 
     - name: test value of variable
        ansible.builtin.debug:
-         msg: "La palabra clave es {{ chichinabo }}""
+         msg: "La palabra clave es {{ chichinabo }}"
 
     - name: Register to Red Hat
       become: true
