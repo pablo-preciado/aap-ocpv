@@ -1,6 +1,3 @@
-ssh-keys
-my-service-account
-ToDoList
+my-service-account.md
 *.log
 *.json
-/testing
