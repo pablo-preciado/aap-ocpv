@@ -179,7 +179,7 @@
         inventory: "OCP Virt"
         extra_vars: 
           chichinavo: botijo
-        ask_extra_vars: true        
+        ask_variables_on_launch: true        
         workflow_nodes:
           - identifier: create_vm_node
             unified_job_template:
