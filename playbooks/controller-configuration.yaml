@@ -177,11 +177,11 @@
         name: "[WF] Create VM and install Jboss"
         description: "Workflow template to create VM, install Jboss, and deploy an app"
         inventory: "OCP Virt"
-        extra_vars:
-          my_namespace: workloads
-          my_git_repo: https://github.com/jboss-developer/jboss-eap-quickstarts.git
-          my_app_directory: jboss-eap-quickstarts
-          my_app_path_to_pomxml: /helloworld/pom.xml
+        #extra_vars:
+        #  my_namespace: workloads
+        #  my_git_repo: https://github.com/jboss-developer/jboss-eap-quickstarts.git
+        #  my_app_directory: jboss-eap-quickstarts
+        #  my_app_path_to_pomxml: /helloworld/pom.xml
         ask_variables_on_launch: true        
         workflow_nodes:
           - identifier: create_vm_node

@@ -116,3 +116,43 @@ Then use your browser and navigate to the same url but with the path /helloworld
 ![AAP workflow successful](images/helloworld.png)
 
 Please, note the Hello World application being deployed comes from the [Jboss Quickstarts repo](https://github.com/jboss-developer/jboss-eap-quickstarts?tab=readme-ov-file).
+
+## Execute from AnsibleJob CRD in OpenShift
+
+You can execute the Ansible Automation Platform workflow by using the AnsibleJob CRD in your OpenShift cluster. For that, you need to create a token for your user in Ansible Automation Platform. Go to Access Management > User > admin > Tokens tab > Create token. Give it Write scope:
+
+![AAP user token](images/aap-user-token.png)
+
+Copy the value and keep it save as you wont be able to retrieve it again.
+
+Then go to the OpenShift cluster and create the following secret (remember to user your token and AAP url):
+
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: controller-access
+  namespace: aap
+  type: Opaque
+stringData:
+  token: <generated-token>
+  host: https://my-controller-host.example.com/
+```
+
+Now you can run the Workflow of this demo by creating the following CRD:
+
+```
+apiVersion: tower.ansible.com/v1alpha1
+kind: AnsibleJob
+metadata:
+  name: my-jboss-demo-job
+  namespace: aap
+spec:
+  connection_secret: controller-access
+  workflow_template_name: '[WF] Create VM and install Jboss'
+  extra_vars:
+    my_namespace: workloads
+    my_git_repo: https://github.com/jboss-developer/jboss-eap-quickstarts.git
+    my_app_directory: jboss-eap-quickstarts
+    my_app_path_to_pomxml: /helloworld/pom.xml
+```
