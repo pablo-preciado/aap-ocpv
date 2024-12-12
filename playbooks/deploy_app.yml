@@ -19,7 +19,7 @@
         dest: "/home/redhat1/{{ my_app_directory | default('jboss-eap-quickstarts') }}"
 
     - name: Run maven build
-      ansible.builtin.command: "mvn -f /home/redhat1/{{ my_app_directory | default('jboss-eap-quickstarts') }}/helloworld/pom.xml clean package"
+      ansible.builtin.command: "mvn -f /home/redhat1/{{ my_app_directory | default('jboss-eap-quickstarts') }}{{ my_app_path_to_pomxml | default('/helloworld/pom.xml') }} clean package"
 
     - name: Deploy application to jboss server
-      ansible.builtin.command: "mvn -f /home/redhat1/{{ my_app_directory | default('jboss-eap-quickstarts') }}/helloworld/pom.xml wildfly:deploy"
+      ansible.builtin.command: "mvn -f /home/redhat1/{{ my_app_directory | default('jboss-eap-quickstarts') }}{{ my_app_path_to_pomxml | default('/helloworld/pom.xml') }} wildfly:deploy"
