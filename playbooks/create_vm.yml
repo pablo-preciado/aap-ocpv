@@ -1,9 +1,6 @@
 - name: Create VM with service and route
   hosts: localhost
 
-  vars:
-    my_namespace: workloads
-
   tasks:
 
   - name: Create project
@@ -13,13 +10,13 @@
         apiVersion: project.openshift.io/v1
         kind: Project
         metadata:
-          name: "{{ my_namespace }}"
+          name: "{{ my_namespace | default('workloads') }}"
 
   - name: Create RHEL9 virtual machine
     redhat.openshift_virtualization.kubevirt_vm:
       state: present
       name: rhel9-jboss8
-      namespace: "{{ my_namespace }}"
+      namespace: "{{ my_namespace | default('workloads') }}"
       labels:
         app: jboss8
       instancetype:
@@ -66,7 +63,7 @@
       api_version: kubevirt.io/v1
       kind: VirtualMachineInstance
       name: rhel9-jboss8
-      namespace: "{{ my_namespace }}"
+      namespace: "{{ my_namespace | default('workloads') }}"
     register: vmi
     retries: 60
     delay: 10
@@ -80,7 +77,7 @@
         kind: Service
         metadata:
           name: rhel9-jboss8-svc
-          namespace: "{{ my_namespace }}"
+          namespace: "{{ my_namespace | default('workloads') }}"
         spec:
           selector:
             app: jboss8
@@ -98,7 +95,7 @@
         apiVersion: route.openshift.io/v1
         metadata:
           name: rhel9-jboss8-route
-          namespace: "{{ my_namespace }}"
+          namespace: "{{ my_namespace | default('workloads') }}"
         spec:
           to:
             kind: Service

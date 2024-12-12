@@ -178,7 +178,9 @@
         description: "Workflow template to create VM, install Jboss, and deploy an app"
         inventory: "OCP Virt"
         extra_vars: 
-          chichinavo: botijo
+          my_app_directory: jboss-eap-quickstarts
+          my_git_repo: https://github.com/jboss-developer/jboss-eap-quickstarts.git
+          my_namespace: workloads
         ask_variables_on_launch: true        
         workflow_nodes:
           - identifier: create_vm_node
