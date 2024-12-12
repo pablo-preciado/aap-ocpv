@@ -177,6 +177,9 @@
         name: "[WF] Create VM and install Jboss"
         description: "Workflow template to create VM, install Jboss, and deploy an app"
         inventory: "OCP Virt"
+        extra_vars: 
+          chichinavo: botijo
+        ask_extra_vars: true        
         workflow_nodes:
           - identifier: create_vm_node
             unified_job_template:
