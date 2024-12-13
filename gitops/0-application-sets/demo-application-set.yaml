@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-application-set
+  namespace: openshift-gitops
+spec:
+  generators:
+    - list:
+        elements:
+          - name: 1-demo-operators
+            path: gitops/1-operators
+            syncWave: "0"
+          - name: 2-demo-crds
+            path: gitops/2-crd-instances
+            syncWave: "1"
+  template:
+    metadata:
+      name: "{{name}}"
+      annotations:
+        argocd.argoproj.io/sync-wave: "{{syncWave}}"
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/pablo-preciado/aap-ocpv'
+        targetRevision: main
+        path: "{{path}}"
+      destination:
+        server: 'https://kubernetes.default.svc'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+        retry:
+          limit: 10
+          backoff:
+            duration: "30s"
+            factor: 2
+            maxDuration: "10m"

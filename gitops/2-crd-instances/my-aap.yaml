@@ -1,0 +1,22 @@
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: aap-operator
+    app.kubernetes.io/name: my-aap-instance
+    app.kubernetes.io/part-of: my-aap-instance
+  name: my-aap
+  namespace: aap
+spec:
+  api:
+    log_level: INFO
+    replicas: 1
+  database:
+    postgres_data_volume_init: false
+  eda:
+    disabled: true
+  hub:
+    disabled: true
+  no_log: true
+  redis_mode: standalone
+  route_tls_termination_mechanism: Edge
