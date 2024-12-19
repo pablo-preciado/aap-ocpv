@@ -48,15 +48,20 @@ Fill the new credential with the following values:
 
 ![AAP Atomation Hub Credential](images/automation-hub-credential.png)
 
-Once you have created the credential go to Access Management > Organizations > Default > Edit organization. In the credentials section of the organization add the newly created organization, then uncheck and check again the "Ansible Galaxy" credentials (this is needed so the organization uses first the manually created credentials).
+Once you have created the credential go to Access Management > Organizations > Default > Edit organization. In the credentials section of the organization add the newly created credential.
 
  ![AAP Default organization](images/default-organization.png)
+
+ Then click next and order the credentials so the "Red Hat Automation Hub" is above "Ansible Galaxy" credentials (this is needed so the organization uses first the manually created credentials).
+
+![AAP Default organization](images/organization-credentials-order.png)
 
 Create a project in Automation Execution > Projects > Create project with the following values:
  - Name: OCP Virt
  - Organization: Default
  - Source Control Type: Git
  - Source Control URL: https://github.com/pablo-preciado/aap-ocpv.git
+ - Update revision on launch: true
 
  ![AAP project](images/aap-project.png)
 
