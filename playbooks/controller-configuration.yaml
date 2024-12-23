@@ -169,6 +169,20 @@
           - "{{ credential_linux_machine.id }}"
         state: present
 
+    - name: Create job template [JT] Wait for VM connection
+      ansible.controller.job_template:
+        controller_host: "{{ my_controller_fqdn }}"
+        controller_username: "{{ my_controller_user }}"
+        controller_password: "{{ my_controller_pass }}"
+        name: "[JT] Wait for VM connection"
+        description: "Job template that waits for VM's ssh connection to be available"
+        inventory: "OCP Virt"
+        project: "OCP Virt"
+        playbook: "playbooks/wait_for_connection.yml"
+        credentials:
+          - "{{ credential_linux_machine.id }}"
+        state: present
+
     - name: Create workflow job template [WF] Create VM and install Jboss
       ansible.controller.workflow_job_template:
         controller_host: "{{ my_controller_fqdn }}"
@@ -177,11 +191,6 @@
         name: "[WF] Create VM and install Jboss"
         description: "Workflow template to create VM, install Jboss, and deploy an app"
         inventory: "OCP Virt"
-        #extra_vars:
-        #  my_namespace: workloads
-        #  my_git_repo: https://github.com/jboss-developer/jboss-eap-quickstarts.git
-        #  my_app_directory: jboss-eap-quickstarts
-        #  my_app_path_to_pomxml: /helloworld/pom.xml
         ask_variables_on_launch: true        
         workflow_nodes:
           - identifier: create_vm_node
@@ -198,6 +207,13 @@
                 organization:
                   name: Default
               type: inventory_source
+            related:
+              success_nodes:
+                - identifier: wait-for-vm-to-accept-connection
+          - identifier: wait-for-vm-to-accept-connection
+            unified_job_template:
+              name: 
+              type: job_template
             related:
               success_nodes:
                 - identifier: install_jboss_node
