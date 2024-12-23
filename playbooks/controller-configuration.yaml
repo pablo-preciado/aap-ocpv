@@ -209,8 +209,8 @@
               type: inventory_source
             related:
               success_nodes:
-                - identifier: wait-for-vm-to-accept-connection
-          - identifier: wait-for-vm-to-accept-connection
+                - identifier: wait-for-connection
+          - identifier: wait-for-connection
             unified_job_template:
               name: "[JT] Wait for VM connection"
               type: job_template
