@@ -158,6 +158,7 @@ spec:
   extra_vars:
     my_namespace: workloads
     my_instancetype: u1.medium # typically choose between u1.medium or u1.large
+    my_label_app_name: jboss8
     my_git_repo: https://github.com/jboss-developer/jboss-eap-quickstarts.git
     my_app_directory: jboss-eap-quickstarts
     my_app_path_to_pomxml: /helloworld/pom.xml

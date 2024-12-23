@@ -18,7 +18,7 @@
       name: jboss8
       namespace: "{{ my_namespace | default('workloads') }}"
       labels:
-        app: jboss8
+        app: "{{ my_label_app_name | default('jboss8') }}" 
       instancetype:
         name: "{{ my_instancetype | default('u1.medium') }}"
       preference:
