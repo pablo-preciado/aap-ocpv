@@ -212,7 +212,7 @@
                 - identifier: wait-for-vm-to-accept-connection
           - identifier: wait-for-vm-to-accept-connection
             unified_job_template:
-              name: 
+              name: "[JT] Wait for VM connection"
               type: job_template
             related:
               success_nodes:
