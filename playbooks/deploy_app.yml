@@ -1,5 +1,5 @@
 - name: Deploy jboss quickstart application
-  hosts: "namespace_{{ my_namespace | default('workloads') }}"
+  hosts: "namespace_{{ my_namespace | default('workloads') | replace('-', '_') }}"
   become: true
   
   tasks:
