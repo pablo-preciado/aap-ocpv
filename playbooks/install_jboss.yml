@@ -1,4 +1,4 @@
-- name: Deploy jboss to VM's in the workloads namespace
+- name: Deploy jboss to VM's in the configured namespace
   hosts: "namespace_{{ my_namespace | default('workloads') | replace('-', '_') }}" #Ansible does not admit "-" in the host names, so it replaces it with "_", hence you need your playbook to be aware of it
   vars:
     eap_version: '8.0.0'
@@ -16,6 +16,11 @@
       - 8080
   
   tasks:
+
+    - name: Wait for connection
+      ansible.builtin.wait_for_connection:
+        delay: 15
+        timeout: 300
 
     - name: Register to Red Hat
       become: true
