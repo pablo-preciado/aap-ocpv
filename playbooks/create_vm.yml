@@ -15,7 +15,7 @@
   - name: Create RHEL9 virtual machine
     redhat.openshift_virtualization.kubevirt_vm:
       state: present
-      name: rhel9-jboss8
+      name: jboss8
       namespace: "{{ my_namespace | default('workloads') }}"
       labels:
         app: jboss8
@@ -62,7 +62,7 @@
     kubernetes.core.k8s_info:
       api_version: kubevirt.io/v1
       kind: VirtualMachineInstance
-      name: rhel9-jboss8
+      name: jboss8
       namespace: "{{ my_namespace | default('workloads') }}"
     register: vmi
     retries: 60
@@ -76,13 +76,13 @@
         apiVersion: v1
         kind: Service
         metadata:
-          name: rhel9-jboss8-svc
+          name: jboss8-svc
           namespace: "{{ my_namespace | default('workloads') }}"
         spec:
           selector:
             app: jboss8
           ports:
-            - name: rhel9-jboss8-port
+            - name: jboss8-port
               protocol: TCP
               port: 8080
               targetPort: 8080
@@ -94,12 +94,12 @@
         kind: Route
         apiVersion: route.openshift.io/v1
         metadata:
-          name: rhel9-jboss8-route
+          name: jboss8-route
           namespace: "{{ my_namespace | default('workloads') }}"
         spec:
           to:
             kind: Service
-            name: rhel9-jboss8-svc
+            name: jboss8-svc
             weight: 100
           port:
             targetPort: 8080
