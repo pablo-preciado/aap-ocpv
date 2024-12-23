@@ -1,5 +1,5 @@
 - name: Deploy jboss to VM's in the workloads namespace
-  hosts: "namespace_{{ my_namespace | default('workloads') }}"
+  hosts: "namespace_{{ my_namespace | default('workloads') | replace('-', '_') }}"
   vars:
     eap_version: '8.0.0'
     eap_install_workdir: '/opt/'
