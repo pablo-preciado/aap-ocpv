@@ -5,4 +5,3 @@ collections:
 - name: redhat.eap
 - name: community.general
 - name: ansible.controller
-  #version: 4.5.12
